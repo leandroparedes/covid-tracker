@@ -60,14 +60,29 @@
             ></chart>
         </v-card>
 
-        <div class="mb-4 mt-8">
+        <div class="mb-2 mt-12 d-flex justify-space-between">
             <div class="display-2">Paises</div>
+            <div>
+                <v-text-field
+                    v-model="searchInput"
+                    label="Buscar un país"
+                    outlined
+                    required
+                ></v-text-field>
+            </div>
+        </div>
+
+        <div
+            v-if="searchInput"
+            class="headline mb-3"
+        >
+            Buscando <span class="blue--text">{{ searchInput }}</span>
         </div>
 
         <v-row>
             <v-col
                 cols="12" sm="6" md="3"
-                v-for="(country, index) in countries"
+                v-for="(country, index) in filteredCountries"
                 :key="index"
             >
                 <v-hover v-slot:default="{ hover }">
@@ -114,7 +129,9 @@ export default {
                 recovered: 0,
                 confirmed: 0
             },
-            countries: []
+            countries: [],
+            filteredCountries: [],
+            searchInput: ''
         }
     },
     mounted () {
@@ -132,6 +149,7 @@ export default {
 
         this.axios.get(countriesUrl).then(res => {
             this.loadCountriesData(this.sortByConfirmed(res.data));
+            this.filteredCountries = this.countries;
         });
     },
     methods: {
@@ -193,6 +211,11 @@ export default {
                     sorted[key] = data[key];
                 });
             return sorted;
+        }
+    },
+    watch: {
+        searchInput: function (value) {
+            this.filteredCountries = this.countries.filter(country => country.name.toLowerCase().includes(value.toLowerCase()));
         }
     }
 }
