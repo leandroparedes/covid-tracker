@@ -7,7 +7,7 @@
                 <v-card class="border-top-primary">
                     <v-card-title class="d-flex justify-space-between">
                         Población
-                        <v-icon dark>mdi-human-male</v-icon>
+                        <v-icon dark class="primary--text">mdi-human-male</v-icon>
                     </v-card-title>
                     <v-card-text class="display-1">
                         {{ info.population | formatNumber }}
@@ -18,7 +18,7 @@
                 <v-card class="border-top-warning">
                     <v-card-title class="d-flex justify-space-between">
                         Confirmados
-                        <v-icon dark>mdi-check-circle</v-icon>
+                        <v-icon dark class="warning--text">mdi-check</v-icon>
                     </v-card-title>
                     <v-card-text class="display-1">
                         {{ info.confirmed | formatNumber }}
@@ -30,7 +30,7 @@
                 <v-card class="border-top-danger">
                     <v-card-title class="d-flex justify-space-between">
                         Muertos
-                        <v-icon dark>mdi-coffin</v-icon>
+                        <v-icon dark class="error--text">mdi-coffin</v-icon>
                     </v-card-title>
                     <v-card-text class="display-1">
                         {{ info.deaths | formatNumber }}
@@ -42,7 +42,7 @@
                 <v-card class="border-top-success">
                     <v-card-title class="d-flex justify-space-between">
                         Recuperados
-                        <v-icon dark>mdi-heart</v-icon>
+                        <v-icon dark class="success--text">mdi-heart</v-icon>
                     </v-card-title>
                     <v-card-text class="display-1">
                         {{ info.recovered | formatNumber }}
@@ -257,15 +257,15 @@ export default {
 
 <style scoped>
     .border-top-primary {
-        border-top: 3px solid #375a7f !important;
+        border-top: 3px solid #2196f3 !important;
     }
     .border-top-warning {
-        border-top: 3px solid #f39c12 !important;
+        border-top: 3px solid #fb8c00 !important;
     }
     .border-top-danger {
-        border-top: 3px solid #e74c3c !important;
+        border-top: 3px solid #ff5252 !important;
     }
     .border-top-success {
-        border-top: 3px solid #00bc8c !important;
+        border-top: 3px solid #4caf50 !important;
     }
 </style>
