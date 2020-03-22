@@ -4,7 +4,7 @@
 
         <v-row class="mb-3">
             <v-col cols="12" sm="6" md="3">
-                <v-card>
+                <v-card class="border-top-primary">
                     <v-card-title class="d-flex justify-space-between">
                         Población
                         <v-icon dark>mdi-human-male</v-icon>
@@ -15,7 +15,7 @@
                 </v-card>
             </v-col>
             <v-col cols="12" sm="6" md="3">
-                <v-card>
+                <v-card class="border-top-warning">
                     <v-card-title class="d-flex justify-space-between">
                         Confirmados
                         <v-icon dark>mdi-check-circle</v-icon>
@@ -27,7 +27,7 @@
                 </v-card>
             </v-col>
             <v-col cols="12" sm="6" md="3">
-                <v-card>
+                <v-card class="border-top-danger">
                     <v-card-title class="d-flex justify-space-between">
                         Muertos
                         <v-icon dark>mdi-coffin</v-icon>
@@ -39,7 +39,7 @@
                 </v-card>
             </v-col>
             <v-col>
-                <v-card>
+                <v-card class="border-top-success">
                     <v-card-title class="d-flex justify-space-between">
                         Recuperados
                         <v-icon dark>mdi-heart</v-icon>
@@ -60,9 +60,9 @@
             ></chart>
         </v-card>
 
-        <div class="mb-2 mt-12 d-flex justify-space-between">
+        <div class="mb-2 mt-12 d-flex flex-column flex-sm-row justify-space-between">
             <div class="display-2">Paises</div>
-            <div>
+            <div class="mt-4 mt-md-0">
                 <v-text-field
                     v-model="searchInput"
                     label="Buscar un país"
@@ -220,3 +220,18 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+    .border-top-primary {
+        border-top: 3px solid #375a7f !important;
+    }
+    .border-top-warning {
+        border-top: 3px solid #f39c12 !important;
+    }
+    .border-top-danger {
+        border-top: 3px solid #e74c3c !important;
+    }
+    .border-top-success {
+        border-top: 3px solid #00bc8c !important;
+    }
+</style>
