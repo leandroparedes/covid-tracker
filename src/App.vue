@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <v-container>
+        <v-container class="my-8 px-12">
             <router-view></router-view>
         </v-container>
     </v-app>
