@@ -53,7 +53,10 @@
         </v-row>
         
         <div v-if="windowWidth >= 600">
-            <v-card class="pa-4">
+            <v-card class="px-2 pt-1 pb-4">
+                <v-card-title>
+                    Mostrando datos desde {{ Object.keys(data)[Object.keys(data).length - 1] | moment('from') }}
+                </v-card-title>
                 <chart
                     v-if="chartLoaded"
                     :chart-data="chartData"
@@ -75,8 +78,8 @@
                     </thead>
                     <tbody>
                         <tr v-for="(count, day, index) in data" :key="index">
-                        <td>{{ day }}</td>
-                        <td class="text-center">{{ count | formatNumber }}</td>
+                            <td>{{ day | moment('MMMM D, YYYY') }}</td>
+                            <td class="text-center">{{ count | formatNumber }}</td>
                         </tr>
                     </tbody>
                 </template>
