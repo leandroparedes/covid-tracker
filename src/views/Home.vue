@@ -241,6 +241,17 @@ export default {
 }
 </script>
 
-<style>
-
-</style>
+<style scoped>
+    .border-top-primary {
+        border-top: 3px solid #2196f3 !important;
+    }
+    .border-top-warning {
+        border-top: 3px solid #fb8c00 !important;
+    }
+    .border-top-danger {
+        border-top: 3px solid #ff5252 !important;
+    }
+    .border-top-success {
+        border-top: 3px solid #4caf50 !important;
+    }
+</style> 
