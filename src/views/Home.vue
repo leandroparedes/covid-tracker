@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="display-3 mb-4">{{ title }}</div>
+        <div class="display-2 mb-4">{{ info.title }}</div>
 
         <v-row class="mb-3">
             <v-col cols="12" sm="6" md="3">
@@ -51,11 +51,11 @@
                 </v-card>
             </v-col>
         </v-row>
-        
+
         <div v-if="windowWidth >= 600">
             <v-card class="px-2 pt-1 pb-4">
                 <v-card-title>
-                    Mostrando datos desde {{ Object.keys(data)[Object.keys(data).length - 1] | moment('from') }}
+                    Mostrando datos desde {{ lastDate | moment('from') }}
                 </v-card-title>
                 <chart
                     v-if="chartLoaded"
@@ -67,7 +67,7 @@
         <div v-else>
             <v-simple-table
                 :fixed-header="true"
-                :height="500"
+                :height="400"
             >
                 <template v-slot:default>
                     <thead>
@@ -77,7 +77,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(count, day, index) in data" :key="index">
+                        <tr v-for="(count, day, index) in tableData" :key="index">
                             <td>{{ day | moment('MMMM D, YYYY') }}</td>
                             <td class="text-center">{{ count | formatNumber }}</td>
                         </tr>
@@ -86,9 +86,9 @@
             </v-simple-table>
         </div>
 
-        <div class="mb-2 mt-12 d-flex flex-column flex-sm-row justify-space-between">
+        <div class="mt-12 d-flex flex-column flex-sm-row justify-space-between">
             <div class="display-2">Paises</div>
-            <div class="mt-4 mt-md-0">
+            <div class="mt-4 mt-sm-0">
                 <v-text-field
                     v-model="searchInput"
                     label="Buscar un país"
@@ -114,9 +114,9 @@
                 <v-hover v-slot:default="{ hover }">
                     <v-card
                         :elevation="hover ? 20 : 2"
-                        class="pa-1" @click="changeData(country.name)"
+                        class="pa-1" @click="changeData(country.originalName)"
                     >
-                        <v-card-title>{{ country.name }}</v-card-title>
+                        <v-card-title class="text-truncate">{{ country.name }}</v-card-title>
                         <v-card-subtitle>Casos confirmados</v-card-subtitle>
                         <v-card-text>
                             <span class="display-1">{{ country.confirmed | formatNumber }}</span>
@@ -139,8 +139,13 @@ export default {
     components: { Chart },
     data: function () {
         return {
-            title: 'Global',
-            data: null,
+            info: {
+                title: '',
+                population: 0,
+                confirmed: 0,
+                deaths: 0,
+                recovered: 0,
+            },
             chartLoaded: false,
             chartData: {
                 labels: [],
@@ -150,15 +155,10 @@ export default {
                 responsive: true,
                 maintainAspectRatio: false
             },
-            info: {
-                population: 0,
-                deaths: 0,
-                recovered: 0,
-                confirmed: 0
-            },
             countries: [],
             filteredCountries: [],
             searchInput: '',
+            tableData: null,
             windowWidth: window.innerWidth
         }
     },
@@ -169,106 +169,78 @@ export default {
 
         const country = this.$route.query.country || 'Global';
         const historyUrl = `https://covid-api-wrapper.herokuapp.com/history?country=${country}`;
-        this.title = country;
 
         this.axios.get(historyUrl).then(res => {
-            const data = res.data.All;
-            this.data = data.dates;
-            this.loadChartData(this.sort(data.dates));
-            this.loadInfoData(data);
+            this.loadInfo(res.data);
+            this.loadChartData(res.data.dates);
+            this.tableData = res.data.dates;
         });
 
         const countriesUrl = 'https://covid-api-wrapper.herokuapp.com/cases';
 
         this.axios.get(countriesUrl).then(res => {
-            this.loadCountriesData(this.sortByConfirmed(res.data));
+            this.loadCountriesData(res.data);
             this.filteredCountries = this.countries;
         });
     },
     methods: {
-        changeData: function (country) {
-            this.$router.push({ query: { country: country }}).catch(err => {});
+        loadInfo: function (data) {
+            this.info.title = data.name;
+            this.info.population = data.population;
+            this.info.confirmed = data.confirmed;
+            this.info.deaths = data.deaths;
+            this.info.recovered = data.recovered;
+        },
+        loadChartData: function (data) {
+            this.chartLoaded = false;
+            this.chartData = { labels: [], datasets: [] };
 
-            const historyUrl = `https://covid-api-wrapper.herokuapp.com/history?country=${country}`;
+            const sortedData = this.sort(data);
+            this.chartData.labels = Object.keys(sortedData);
+            this.chartData.datasets.push({
+                label: 'Casos confirmados',
+                backgroundColor: '#375a7f',
+                data: Object.values(sortedData)
+            });
+
+            this.chartLoaded = true;
+        },
+        loadCountriesData: function (data) {
+            data.map(country => this.countries.push(country));
+        },
+        changeData: function (countryName) {
+            this.$router.push({ query: { country: countryName }}).catch(err => {});
+
+            const historyUrl = `https://covid-api-wrapper.herokuapp.com/history?country=${countryName}`;
 
             this.axios.get(historyUrl).then(res => {
-                const data = res.data.All;
-                this.data = data.dates;
-                this.title = country;
-                this.loadChartData(this.sort(data.dates));
-                this.loadInfoData(data);
+                this.loadInfo(res.data);
+                this.loadChartData(res.data.dates);
+                this.tableData = res.data.dates;
 
                 window.scrollTo(0, 0);
             });
         },
-        loadChartData: function (data) {
-            this.loaded = false;
-            this.chartData = { labels: [], datasets: [] };
-            this.chartData.labels = Object.keys(data);
-            this.chartData.datasets.push({
-                label: 'Casos confirmados',
-                backgroundColor: '#375a7f',
-                data: Object.values(data)
-            });
-            this.chartLoaded = true;
-        },
-        loadInfoData: function (data) {
-            this.info.population = data.population;
-            this.info.deaths = data.deaths;
-            this.info.recovered = data.recovered;
-            this.info.confirmed = data.confirmed;
-        },
-        loadCountriesData: function (data) {
-            Object.keys(data).map(async (country) => {
-                this.countries.push({
-                    name: country,
-                    population: data[country].All.population,
-                    deaths: data[country].All.deaths,
-                    recovered: data[country].All.recovered,
-                    confirmed: data[country].All.confirmed
-                });
-            });
+        sort: function (o) {
+            return Object.keys(o).sort().reduce((r, k) => (r[k] = o[k], r), {});
         },
         percentageDifference: function (value_a, value_b) {
             return ((value_b * 100) / value_a).toFixed(5);
         },
-        sort: function (o) {
-            return Object.keys(o).sort().reduce((r, k) => (r[k] = o[k], r), {});
-        },
-        sortByConfirmed: function (data) {
-            let sorted = {};
-            Object
-                .keys(data).sort(function(a, b){
-                    return data[b].All.confirmed - data[a].All.confirmed;
-                })
-                .forEach(function(key) {
-                    sorted[key] = data[key];
-                });
-            return sorted;
-        }
     },
     watch: {
         searchInput: function (value) {
             this.filteredCountries = this.countries.filter(country => country.name.toLowerCase().includes(value.toLowerCase()));
-        },
-        windowWidth: function (newWidth) {
-            console.log('changed', newWidth);
+        }
+    },
+    computed: {
+        lastDate: function () {
+            return Object.keys(this.tableData)[Object.keys(this.tableData).length - 1];
         }
     }
 }
 </script>
 
-<style scoped>
-    .border-top-primary {
-        border-top: 3px solid #2196f3 !important;
-    }
-    .border-top-warning {
-        border-top: 3px solid #fb8c00 !important;
-    }
-    .border-top-danger {
-        border-top: 3px solid #ff5252 !important;
-    }
-    .border-top-success {
-        border-top: 3px solid #4caf50 !important;
-    }
+<style>
+
 </style>
