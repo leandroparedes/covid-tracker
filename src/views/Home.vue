@@ -51,14 +51,37 @@
                 </v-card>
             </v-col>
         </v-row>
-
-        <v-card class="pa-4">
-            <chart
-                v-if="chartLoaded"
-                :chart-data="chartData"
-                :chart-options="chartOptions"
-            ></chart>
-        </v-card>
+        
+        <div v-if="windowWidth >= 600">
+            <v-card class="pa-4">
+                <chart
+                    v-if="chartLoaded"
+                    :chart-data="chartData"
+                    :chart-options="chartOptions"
+                ></chart>
+            </v-card>
+        </div>
+        <div v-else>
+            <v-simple-table
+                :fixed-header="true"
+                :height="500"
+            >
+                <template v-slot:default>
+                    <thead>
+                        <tr>
+                            <th class="text-left">Fecha</th>
+                            <th class="text-center">Casos confirmados</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(count, day, index) in data" :key="index">
+                        <td>{{ day }}</td>
+                        <td class="text-center">{{ count | formatNumber }}</td>
+                        </tr>
+                    </tbody>
+                </template>
+            </v-simple-table>
+        </div>
 
         <div class="mb-2 mt-12 d-flex flex-column flex-sm-row justify-space-between">
             <div class="display-2">Paises</div>
@@ -114,6 +137,7 @@ export default {
     data: function () {
         return {
             title: 'Global',
+            data: null,
             chartLoaded: false,
             chartData: {
                 labels: [],
@@ -131,16 +155,22 @@ export default {
             },
             countries: [],
             filteredCountries: [],
-            searchInput: ''
+            searchInput: '',
+            windowWidth: window.innerWidth
         }
     },
     mounted () {
+        window.onresize = () => {
+            this.windowWidth = window.innerWidth;
+        }
+
         const country = this.$route.query.country || 'Global';
         const historyUrl = `https://covid-api-wrapper.herokuapp.com/history?country=${country}`;
         this.title = country;
 
         this.axios.get(historyUrl).then(res => {
             const data = res.data.All;
+            this.data = data.dates;
             this.loadChartData(this.sort(data.dates));
             this.loadInfoData(data);
         });
@@ -160,6 +190,7 @@ export default {
 
             this.axios.get(historyUrl).then(res => {
                 const data = res.data.All;
+                this.data = data.dates;
                 this.title = country;
                 this.loadChartData(this.sort(data.dates));
                 this.loadInfoData(data);
@@ -216,6 +247,9 @@ export default {
     watch: {
         searchInput: function (value) {
             this.filteredCountries = this.countries.filter(country => country.name.toLowerCase().includes(value.toLowerCase()));
+        },
+        windowWidth: function (newWidth) {
+            console.log('changed', newWidth);
         }
     }
 }
