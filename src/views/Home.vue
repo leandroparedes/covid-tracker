@@ -154,7 +154,7 @@ export default {
     },
     methods: {
         changeData: function (country) {
-            this.$router.push({ query: { country: country }});
+            this.$router.push({ query: { country: country }}).catch(err => {});
 
             const historyUrl = `https://covid-api-wrapper.herokuapp.com/history?country=${country}`;
 
