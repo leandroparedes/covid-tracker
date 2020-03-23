@@ -10,7 +10,8 @@
             multiple
         ></v-autocomplete>
 
-        <v-card class="pa-4" v-if="values.length">
+        <v-card class="px-4 pb-4 pt-1" v-if="values.length">
+            <v-card-title>Casos confirmados</v-card-title>
             <chart
                 v-if="chartLoaded"
                 :chart-data="chartData"
