@@ -21,6 +21,10 @@
         <div v-else class="text-center pa-4 font-weight-light font-italic">
             No hay paises seleccionados
         </div>
+
+        <div class="text-center mt-8">
+            <router-link to="/">Volver al inicio</router-link>
+        </div>
     </div>
 </template>
 
