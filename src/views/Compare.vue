@@ -9,6 +9,7 @@
             label="Busca paises para compararlos"
             multiple
             ref="select"
+            :disabled="loading"
         ></v-autocomplete>
 
         <div v-if="values.length">
