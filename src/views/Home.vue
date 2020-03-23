@@ -128,6 +128,10 @@
                 </v-hover>
             </v-col>
         </v-row>
+
+        <v-overlay :value="loading">
+            <v-progress-circular indeterminate size="64"></v-progress-circular>
+        </v-overlay>
     </div>
 </template>
 
@@ -159,7 +163,8 @@ export default {
             filteredCountries: [],
             searchInput: '',
             tableData: null,
-            windowWidth: window.innerWidth
+            windowWidth: window.innerWidth,
+            loading: false
         }
     },
     mounted () {
@@ -209,6 +214,7 @@ export default {
             data.map(country => this.countries.push(country));
         },
         changeData: function (countryName) {
+            this.loading = true;
             this.$router.push({ query: { country: countryName }}).catch(err => {});
 
             const historyUrl = `https://covid-api-wrapper.herokuapp.com/history?country=${countryName}`;
@@ -219,7 +225,7 @@ export default {
                 this.tableData = res.data.dates;
 
                 window.scrollTo(0, 0);
-            });
+            }).finally(() => this.loading = false);
         },
         sort: function (o) {
             return Object.keys(o).sort().reduce((r, k) => (r[k] = o[k], r), {});
