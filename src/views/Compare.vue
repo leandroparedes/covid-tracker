@@ -1,6 +1,5 @@
 <template>
     <div>
-        <div class="display-1 mb-6">Comparar casos confirmados entre paises</div>
         <v-autocomplete
             v-model="values"
             :items="countries"
@@ -11,7 +10,7 @@
             multiple
         ></v-autocomplete>
 
-        <v-card class="pa-8" v-if="values.length">
+        <v-card class="pa-4" v-if="values.length">
             <chart
                 v-if="chartLoaded"
                 :chart-data="chartData"
