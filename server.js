@@ -10,6 +10,7 @@ app.get(/.*/, function (req, res) {
     res.sendfile(__dirname + "/dist/index.html");
 });
 
+const host = '0.0.0.0';
 const port = process.env.PORT || 8080;
 
-app.listen(port, () => console.log(`Server started on ${port}`));
+app.listen(port, host, () => console.log(`Server started on ${port}`));
