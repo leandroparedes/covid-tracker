@@ -210,7 +210,10 @@ export default {
             this.chartData.datasets.push({
                 label: 'Casos confirmados',
                 backgroundColor: '#375a7f',
-                data: Object.values(sortedData)
+                data: Object.values(sortedData),
+                pointRadius: 4,
+                pointBorderWidth: 1,
+                pointBorderColor: '#1f344a',
             });
 
             this.chartLoaded = true;
