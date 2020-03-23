@@ -115,6 +115,7 @@
                     <v-card
                         :elevation="hover ? 20 : 2"
                         class="pa-1" @click="changeData(country.originalName)"
+                        :class="{'active' : $route.query.country == country.originalName || (!$route.query.country && country.originalName == 'Global')}"
                     >
                         <v-card-title>
                             <div class="text-truncate">{{ country.name }}</div>
@@ -261,5 +262,8 @@ export default {
     }
     .border-top-success {
         border-top: 3px solid #4caf50 !important;
+    }
+    .active {
+        border: 1px solid #2196f3 !important;
     }
 </style> 
