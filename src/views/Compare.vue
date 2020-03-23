@@ -160,11 +160,16 @@ export default {
                 this.axios.get(historyUrl).then(res => {
                     const sortedData = this.sort(res.data.dates);
                     this.chartData.labels = Object.keys(sortedData);
+                    const color = this.getColor();
                     this.chartData.datasets.push({
                         label: res.data.originalName,
-                        borderColor: this.getColor(),
+                        borderColor: color,
                         fill: false,
-                        data: Object.values(sortedData)
+                        data: Object.values(sortedData),
+                        pointRadius: 3,
+                        pointBackgroundColor: color,
+                        pointHoverBackgroundColor: color,
+                        pointHoverBorderColor: color,
                     });
 
                     this.countriesInfo.push({
