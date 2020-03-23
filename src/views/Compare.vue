@@ -18,9 +18,9 @@
                 :chart-options="chartOptions"
             ></chart>
         </v-card>
-        <v-card v-else class="pa-4">
+        <div v-else class="text-center pa-4 font-weight-light font-italic">
             No hay paises seleccionados
-        </v-card>
+        </div>
     </div>
 </template>
 
