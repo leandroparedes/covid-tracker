@@ -96,7 +96,8 @@ export default {
                 responsive: true,
                 maintainAspectRatio: false
             },
-            countriesInfo: []
+            countriesInfo: [],
+            colors: []
         }
     },
     mounted () {
@@ -107,6 +108,8 @@ export default {
                 this.countries.push(country.originalName);
             });
         });
+
+        this.setColors();
     },
     methods: {
         sort: function (o) {
@@ -119,6 +122,19 @@ export default {
                 color += letters[Math.floor(Math.random() * 16)];
             }
             return color;
+        },
+        setColors: function () {
+            this.colors = [
+                '#F44336', '#9C27B0', '#3F51B5', '#8D6E63', '#4CAF50',
+                '#CDDC39', '#607D8B', '#EEEEEE', '#E91E63', '#80DEEA'
+            ];
+        },
+        getColor: function () {
+            if (this.colors.length > this.chartData.datasets.length) {
+                return this.colors[this.chartData.datasets.length];
+            } else {
+                return this.randomColor();
+            }
         }
     },
     watch: {
@@ -146,7 +162,7 @@ export default {
                     this.chartData.labels = Object.keys(sortedData);
                     this.chartData.datasets.push({
                         label: res.data.originalName,
-                        borderColor: this.randomColor(),
+                        borderColor: this.getColor(),
                         fill: false,
                         data: Object.values(sortedData)
                     });
