@@ -116,7 +116,9 @@
                         :elevation="hover ? 20 : 2"
                         class="pa-1" @click="changeData(country.originalName)"
                     >
-                        <v-card-title class="text-truncate">{{ country.name }}</v-card-title>
+                        <v-card-title>
+                            <div class="text-truncate">{{ country.name }}</div>
+                        </v-card-title>
                         <v-card-subtitle>Casos confirmados</v-card-subtitle>
                         <v-card-text>
                             <span class="display-1">{{ country.confirmed | formatNumber }}</span>
