@@ -114,8 +114,10 @@
                 <v-hover v-slot:default="{ hover }">
                     <v-card
                         :elevation="hover ? 20 : 2"
-                        class="pa-1" @click="changeData(country.originalName)"
-                        :class="{'active' : $route.query.country == country.originalName || (!$route.query.country && country.originalName == 'Global')}"
+                        class="pa-1"
+                        @click="changeData(country.originalName)"
+                        :class="{'active' : isSelected(country.originalName)}"
+                        :disabled="isSelected(country.originalName)"
                     >
                         <v-card-title>
                             <div class="text-truncate">{{ country.name }}</div>
@@ -230,6 +232,10 @@ export default {
                 window.scrollTo(0, 0);
             }).finally(() => this.loading = false);
         },
+        isSelected: function (countryName) {
+            return this.$route.query.country == countryName
+                        || (! this.$route.query.country && countryName == 'Global');
+        },
         sort: function (o) {
             return Object.keys(o).sort().reduce((r, k) => (r[k] = o[k], r), {});
         },
@@ -264,6 +270,7 @@ export default {
         border-top: 3px solid #4caf50 !important;
     }
     .active {
+        color: #2196f3 !important;
         border: 1px solid #2196f3 !important;
     }
 </style> 
