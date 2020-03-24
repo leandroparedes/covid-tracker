@@ -50,7 +50,16 @@ export default {
             },
             tooltips: {
                 mode: 'index',
-                intersect: false
+                intersect: false,
+                backgroundColor: '#000',
+                titleFontSize: 18,
+                titleFontColor: '#2196f3',
+                titleAlign: 'center',
+                titleMarginBottom: 10,
+                bodySpacing: 10,
+                bodyFontSize: 14,
+                xPadding: 10,
+                yPadding: 10
             },
             hover: {
                 mode: 'index',
