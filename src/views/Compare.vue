@@ -6,10 +6,12 @@
             outlined
             chips
             small-chips
+            clearable
             label="Busca paises para compararlos"
             multiple
             ref="select"
             :disabled="loading"
+            @click:clear="clear"
         >
             <template v-slot:selection="data">
                 <v-chip
@@ -123,6 +125,9 @@ export default {
         },
         remove: function (countryName) {
             this.values = this.values.filter(v => v != countryName);
+        },
+        clear: function () {
+            this.values = [];
         }
     },
     watch: {
@@ -134,7 +139,12 @@ export default {
             }, 50);
 
             this.chartLoaded = false;
-            if (newArray.length < oldArray.length) {
+            if (newArray.length == 0) {
+                this.chartData.datasets = [];
+                this.countriesInfo = [];
+                this.loading = false;
+                this.chartLoaded = true;
+            } else if (newArray.length < oldArray.length) {
                 const removed = oldArray.filter(c => !newArray.includes(c))[0];
                 this.chartData.datasets = this.chartData.datasets.filter(d => d.label  != removed);
                 this.countriesInfo = this.countriesInfo.filter(c => c.originalName != removed);
