@@ -166,7 +166,6 @@ export default {
                         borderColor: color,
                         fill: false,
                         data: Object.values(sortedData),
-                        pointRadius: 3,
                         pointBackgroundColor: color,
                         pointHoverBackgroundColor: color,
                         pointHoverBorderColor: color,

@@ -52,39 +52,16 @@
             </v-col>
         </v-row>
 
-        <div v-if="windowWidth >= 600">
-            <v-card class="px-2 pt-1 pb-4">
-                <v-card-title>
-                    Mostrando datos desde {{ lastDate | moment('from') }}
-                </v-card-title>
-                <chart
-                    v-if="chartLoaded"
-                    :chart-data="chartData"
-                    :chart-options="chartOptions"
-                ></chart>
-            </v-card>
-        </div>
-        <div v-else>
-            <v-simple-table
-                :fixed-header="true"
-                :height="400"
-            >
-                <template v-slot:default>
-                    <thead>
-                        <tr>
-                            <th class="text-left">Fecha</th>
-                            <th class="text-center">Casos confirmados</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(count, day, index) in tableData" :key="index">
-                            <td>{{ day | moment('MMMM D, YYYY') }}</td>
-                            <td class="text-center">{{ count | formatNumber }}</td>
-                        </tr>
-                    </tbody>
-                </template>
-            </v-simple-table>
-        </div>
+        <v-card class="px-2 pt-1 pb-4">
+            <v-card-title>
+                Mostrando datos desde {{ lastDate | moment('from') }}
+            </v-card-title>
+            <chart
+                v-if="chartLoaded"
+                :chart-data="chartData"
+                :chart-options="chartOptions"
+            ></chart>
+        </v-card>
 
         <div class="mt-12 d-flex flex-column flex-sm-row justify-space-between">
             <div class="display-2">Paises</div>
@@ -161,22 +138,17 @@ export default {
                 datasets: []
             },
             chartOptions: {
-                responsive: true,
-                maintainAspectRatio: false
+                responsive: false,
+                maintainAspectRatio: true
             },
             countries: [],
             filteredCountries: [],
             searchInput: '',
             tableData: null,
-            windowWidth: window.innerWidth,
             loading: false
         }
     },
     mounted () {
-        window.onresize = () => {
-            this.windowWidth = window.innerWidth;
-        }
-
         const country = this.$route.query.country || 'Global';
         const historyUrl = `https://covid-api-wrapper.herokuapp.com/history?country=${country}`;
 
@@ -211,7 +183,6 @@ export default {
                 label: 'Casos confirmados',
                 backgroundColor: '#375a7f',
                 data: Object.values(sortedData),
-                pointRadius: 4,
                 pointBorderWidth: 1,
                 pointBorderColor: '#1f344a',
             });
