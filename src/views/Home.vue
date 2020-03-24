@@ -234,6 +234,7 @@ export default {
             this.chartData = { labels: [], datasets: [] };
             this.$router.push({ query: { country: countryName }}).catch(err => {});
             this.loadData(countryName);
+            window.scrollTo(0, 0);
         },
         isSelected: function (countryName) {
             return this.$route.query.country == countryName
