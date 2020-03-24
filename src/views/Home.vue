@@ -59,7 +59,6 @@
             <chart
                 v-if="chartLoaded"
                 :chart-data="chartData"
-                :chart-options="chartOptions"
             ></chart>
         </v-card>
 
@@ -136,10 +135,6 @@ export default {
             chartData: {
                 labels: [],
                 datasets: []
-            },
-            chartOptions: {
-                responsive: false,
-                maintainAspectRatio: true
             },
             countries: [],
             filteredCountries: [],

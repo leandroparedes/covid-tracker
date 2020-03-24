@@ -12,12 +12,6 @@ import Chart from 'chart.js';
 export default {
     extends: Line,
     mixins: [reactiveProp],
-    props: {
-        options: {
-            type: Object,
-            default: null
-        }
-    },
     data: function () {
         return {
             windowWidth: window.innerWidth,
@@ -31,7 +25,7 @@ export default {
             this.windowWidth = window.innerWidth;
         }
 
-        this.renderChart(this.chartData, this.options);
+        this.renderChart(this.chartData, { responsive: true });
     },
     computed: {
         chartStyle: function () {
