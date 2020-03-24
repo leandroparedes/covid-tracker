@@ -25,12 +25,37 @@
         </v-autocomplete>
 
         <div v-if="values.length">
-            <v-card class="px-4 pb-4 pt-1 mb-3" >
-                <v-card-title>Casos confirmados</v-card-title>
-                <chart
-                    v-if="chartLoaded"
-                    :chart-data="chartData"
-                ></chart>
+            <v-card>
+                <v-tabs
+                    fixed-tabs
+                    background-color="#1e1e1e"
+                    center-active
+                    show-arrows
+                >
+                    <v-tabs-slider color="teal lighten-3"></v-tabs-slider>
+                    <v-tab>Confirmados</v-tab>
+                    <v-tab>Muertos</v-tab>
+                    <v-tab>Recuperados</v-tab>
+
+                    <v-tab-item class="pa-4">
+                        <chart
+                            v-if="confirmedChartLoaded"
+                            :chart-data="confirmedChartData"
+                        ></chart>
+                    </v-tab-item>
+                    <v-tab-item class="pa-4">
+                        <chart
+                            v-if="deathsChartLoaded"
+                            :chart-data="deathsChartData"
+                        ></chart>
+                    </v-tab-item>
+                    <v-tab-item class="pa-4">
+                        <chart
+                            v-if="recoveredChartLoaded"
+                            :chart-data="recoveredChartData"
+                        ></chart>
+                    </v-tab-item>
+                </v-tabs>
             </v-card>
 
             <v-row>
@@ -98,8 +123,18 @@ export default {
             loading: false,
             countries: [],
             values: [],
-            chartLoaded: false,
-            chartData: {
+            confirmedChartLoaded: false,
+            confirmedChartData: {
+                labels: [],
+                datasets: []
+            },
+            deathsChartLoaded: false,
+            deathsChartData: {
+                labels: [],
+                datasets: []
+            },
+            recoveredChartLoaded: false,
+            recoveredChartData: {
                 labels: [],
                 datasets: []
             },
@@ -138,28 +173,47 @@ export default {
                 this.$refs.select.isMenuActive = false
             }, 50);
 
-            this.chartLoaded = false;
+            this.confirmedChartLoaded = false;
+            this.deathsChartLoaded = false;
+            this.recoveredChartLoaded = false;
+
             if (newArray.length == 0) {
-                this.chartData.datasets = [];
+                this.confirmedChartData.datasets = [];
+                this.deathsChartData.datasets = [];
+                this.recoveredChartData.datasets = [];
+
                 this.countriesInfo = [];
+
+                this.confirmedChartLoaded = true;
+                this.deathsChartLoaded = true;
+                this.recoveredChartLoaded = true;
+
                 this.loading = false;
-                this.chartLoaded = true;
             } else if (newArray.length < oldArray.length) {
                 const removed = oldArray.filter(c => !newArray.includes(c))[0];
-                this.chartData.datasets = this.chartData.datasets.filter(d => d.label  != removed);
+
+                this.confirmedChartData.datasets = this.confirmedChartData.datasets.filter(d => d.label  != removed);
+                this.deathsChartData.datasets = this.deathsChartData.datasets.filter(d => d.label  != removed);
+                this.recoveredChartData.datasets = this.recoveredChartData.datasets.filter(d => d.label  != removed);
+
                 this.countriesInfo = this.countriesInfo.filter(c => c.originalName != removed);
-                this.chartLoaded = true;
+
+                this.confirmedChartLoaded = true;
+                this.deathsChartLoaded = true;
+                this.recoveredChartLoaded = true;
                 this.loading = false;
             } else {
                 const lastAdded = newArray.length > 0 ? newArray[newArray.length -1] : newArray[0];
 
-                const historyUrl = `https://covid-api-wrapper.herokuapp.com/history?country=${lastAdded}`;
+                const confirmedUrl = `https://covid-api-wrapper.herokuapp.com/history?country=${lastAdded}&status=Confirmed`;
+                const deathsUrl = `https://covid-api-wrapper.herokuapp.com/history?country=${lastAdded}&status=Deaths`;
+                const recoveredUrl = `https://covid-api-wrapper.herokuapp.com/history?country=${lastAdded}&status=Recovered`;
 
-                this.axios.get(historyUrl).then(res => {
+                const color = this.getColor();
+                this.axios.get(confirmedUrl).then(res => {
                     const sortedData = this.sort(res.data.dates);
-                    this.chartData.labels = Object.keys(sortedData);
-                    const color = this.getColor();
-                    this.chartData.datasets.push({
+                    this.confirmedChartData.labels = Object.keys(sortedData);
+                    this.confirmedChartData.datasets.push({
                         label: res.data.originalName,
                         borderColor: color,
                         fill: false,
@@ -178,7 +232,39 @@ export default {
                         recovered: res.data.recovered
                     });
                 }).finally(() => {
-                    this.chartLoaded = true;
+                    this.confirmedChartLoaded = true;
+                });
+
+                this.axios.get(deathsUrl).then(res => {
+                    const sortedData = this.sort(res.data.dates);
+                    this.deathsChartData.labels = Object.keys(sortedData);
+                    this.deathsChartData.datasets.push({
+                        label: res.data.originalName,
+                        borderColor: color,
+                        fill: false,
+                        data: Object.values(sortedData),
+                        pointBackgroundColor: color,
+                        pointHoverBackgroundColor: color,
+                        pointHoverBorderColor: color,
+                    });
+                }).finally(() => {
+                    this.deathsChartLoaded = true;
+                });
+
+                this.axios.get(recoveredUrl).then(res => {
+                    const sortedData = this.sort(res.data.dates);
+                    this.recoveredChartData.labels = Object.keys(sortedData);
+                    this.recoveredChartData.datasets.push({
+                        label: res.data.originalName,
+                        borderColor: color,
+                        fill: false,
+                        data: Object.values(sortedData),
+                        pointBackgroundColor: color,
+                        pointHoverBackgroundColor: color,
+                        pointHoverBorderColor: color,
+                    });
+                }).finally(() => {
+                    this.recoveredChartLoaded = true;
                     this.loading = false;
                 });
             }
