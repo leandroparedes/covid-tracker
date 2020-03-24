@@ -32,7 +32,6 @@
                     center-active
                     show-arrows
                 >
-                    <v-tabs-slider color="teal lighten-3"></v-tabs-slider>
                     <v-tab>Confirmados</v-tab>
                     <v-tab>Muertos</v-tab>
                     <v-tab>Recuperados</v-tab>
