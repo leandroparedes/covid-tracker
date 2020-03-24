@@ -69,7 +69,9 @@
                     v-model="searchInput"
                     label="Buscar un país"
                     outlined
+                    clearable
                     required
+                    @click:clear="clearSearchInput"
                 ></v-text-field>
             </div>
         </div>
@@ -246,10 +248,17 @@ export default {
         percentageDifference: function (value_a, value_b) {
             return ((value_b * 100) / value_a).toFixed(5);
         },
+        clearSearchInput: function () {
+            this.searchInput = '';
+        }
     },
     watch: {
         searchInput: function (value) {
-            this.filteredCountries = this.countries.filter(country => country.name.toLowerCase().includes(value.toLowerCase()));
+            if (value) {
+                this.filteredCountries = this.countries.filter(country => country.name.toLowerCase().includes(value.toLowerCase()));
+            } else {
+                this.filteredCountries = this.countries;
+            }
         }
     },
     computed: {
