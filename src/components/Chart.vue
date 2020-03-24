@@ -25,7 +25,30 @@ export default {
             this.windowWidth = window.innerWidth;
         }
 
-        this.renderChart(this.chartData, { responsive: true });
+        this.renderChart(this.chartData, {
+            responsive: true,
+            legend: {
+                onClick: (e, legendItem) => {
+                    var index = legendItem.datasetIndex;
+                    var ci = this.$data._chart;
+                    var alreadyHidden = (ci.getDatasetMeta(index).hidden === null) ? false : ci.getDatasetMeta(index).hidden;
+                    ci.data.datasets.forEach(function(e, i) {
+                        var meta = ci.getDatasetMeta(i);
+
+                        if (i !== index) {
+                            if (!alreadyHidden) {
+                                meta.hidden = meta.hidden === null ? !meta.hidden : null;
+                            } else if (meta.hidden === null) {
+                                meta.hidden = true;
+                            }
+                        } else if (i === index) {
+                                meta.hidden = null;
+                        }
+                    });
+                    ci.update();
+                }
+            }
+        });
     },
     watch: {
         'chartData.datasets': function () {
