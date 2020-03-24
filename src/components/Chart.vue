@@ -31,25 +31,13 @@ export default {
             this.windowWidth = window.innerWidth;
         }
 
-        this.renderChart(this.chartData, this.options)
+        this.renderChart(this.chartData, this.options);
     },
     computed: {
         chartStyle: function () {
             const height = this.windowWidth >= 600 ? '450px' : '500px';
             const width = this.windowWidth >= 600 ? '100%' : '500px';
             return { height, width };
-        },
-        size: function () {
-            return {
-                height: {
-                    400: this.windowWidth >= 600,
-                    500: this.windowWidth < 600
-                },
-                width: {
-                    900: this.windowWidth >= 600,
-                    500: this.windowWidth < 600,
-                }
-            };
         }
     }
 }
