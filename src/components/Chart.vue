@@ -47,6 +47,14 @@ export default {
                     });
                     ci.update();
                 }
+            },
+            tooltips: {
+                mode: 'index',
+                intersect: false
+            },
+            hover: {
+                mode: 'index',
+                intersect: false
             }
         });
     },
