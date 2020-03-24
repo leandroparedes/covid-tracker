@@ -6,7 +6,7 @@
             <v-spacer></v-spacer>
 
             <router-link to="/compare" tag="div" style="cursor:pointer">
-                <v-icon>mdi-chart-areaspline-variant</v-icon> <span class="ml-2">Comparar paises</span>
+                <v-icon>mdi-chart-line</v-icon> <span class="ml-1">Comparar paises</span>
             </router-link>
         </v-app-bar>
 
