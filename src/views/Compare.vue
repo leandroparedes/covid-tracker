@@ -10,7 +10,17 @@
             multiple
             ref="select"
             :disabled="loading"
-        ></v-autocomplete>
+        >
+            <template v-slot:selection="data">
+                <v-chip
+                    v-bind="data.attrs"
+                    :input-value="data.selected"
+                    close
+                    @click="data.select"
+                    @click:close="remove(data.item)"
+                >{{ data.item }}</v-chip>
+            </template>
+        </v-autocomplete>
 
         <div v-if="values.length">
             <v-card class="px-4 pb-4 pt-1 mb-3" >
@@ -115,6 +125,9 @@ export default {
         getColor: function () {
             var color = Math.floor(Math.random() * 16777216).toString(16);
             return '#000000'.slice(0, -color.length) + color;
+        },
+        remove: function (countryName) {
+            this.values = this.values.filter(v => v != countryName);
         }
     },
     watch: {
