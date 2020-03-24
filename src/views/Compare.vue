@@ -96,8 +96,7 @@ export default {
                 responsive: true,
                 maintainAspectRatio: false
             },
-            countriesInfo: [],
-            colors: []
+            countriesInfo: []
         }
     },
     mounted () {
@@ -108,33 +107,14 @@ export default {
                 this.countries.push(country.originalName);
             });
         });
-
-        this.setColors();
     },
     methods: {
         sort: function (o) {
             return Object.keys(o).sort().reduce((r, k) => (r[k] = o[k], r), {});
         },
-        randomColor: function () {
-            var letters = '0123456789ABCDEF';
-            var color = '#';
-            for (var i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)];
-            }
-            return color;
-        },
-        setColors: function () {
-            this.colors = [
-                '#F44336', '#9C27B0', '#3F51B5', '#8D6E63', '#4CAF50',
-                '#CDDC39', '#607D8B', '#EEEEEE', '#E91E63', '#80DEEA'
-            ];
-        },
         getColor: function () {
-            if (this.colors.length > this.chartData.datasets.length) {
-                return this.colors[this.chartData.datasets.length];
-            } else {
-                return this.randomColor();
-            }
+            var color = Math.floor(Math.random() * 16777216).toString(16);
+            return '#000000'.slice(0, -color.length) + color;
         }
     },
     watch: {
