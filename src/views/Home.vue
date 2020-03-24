@@ -4,10 +4,10 @@
 
         <v-row class="mb-3">
             <v-col cols="12" sm="6" md="3">
-                <v-card class="border-top-primary">
+                <v-card class="border-top-secondary">
                     <v-card-title class="d-flex justify-space-between">
                         Población
-                        <v-icon dark class="primary--text">mdi-human-male</v-icon>
+                        <v-icon dark class="secondary--text">mdi-human-male</v-icon>
                     </v-card-title>
                     <v-card-text class="display-1">
                         {{ info.population | formatNumber }}
@@ -15,10 +15,10 @@
                 </v-card>
             </v-col>
             <v-col cols="12" sm="6" md="3">
-                <v-card class="border-top-warning">
+                <v-card class="border-top-primary">
                     <v-card-title class="d-flex justify-space-between">
                         Confirmados
-                        <v-icon dark class="warning--text">mdi-check</v-icon>
+                        <v-icon dark class="primary--text">mdi-check</v-icon>
                     </v-card-title>
                     <v-card-text class="display-1">
                         {{ info.confirmed | formatNumber }}
@@ -193,12 +193,12 @@ export default {
             this.chartData.labels = Object.keys(sortedData);
             this.chartData.datasets.push({
                 label: 'Confirmados',
-                borderColor: '#fb8c00',
+                borderColor: '#2196f3',
                 data: Object.values(sortedData),
                 fill: false,
-                pointBackgroundColor: '#fb8c00',
-                pointHoverBackgroundColor: '#fb8c00',
-                pointHoverBorderColor: '#fb8c00',
+                pointBackgroundColor: '#2196f3',
+                pointHoverBackgroundColor: '#2196f3',
+                pointHoverBorderColor: '#2196f3',
             });
         },
         loadDeathsData: function (data) {
@@ -263,8 +263,8 @@ export default {
     .border-top-primary {
         border-top: 3px solid #2196f3 !important;
     }
-    .border-top-warning {
-        border-top: 3px solid #fb8c00 !important;
+    .border-top-secondary {
+        border-top: 3px solid #424242 !important;
     }
     .border-top-danger {
         border-top: 3px solid #ff5252 !important;
