@@ -128,6 +128,7 @@ export default {
     watch: {
         values: function (newArray, oldArray) {
             this.loading = true;
+
             setTimeout(() => {
                 this.$refs.select.isMenuActive = false
             }, 50);
@@ -135,9 +136,8 @@ export default {
             this.chartLoaded = false;
             if (newArray.length < oldArray.length) {
                 const removed = oldArray.filter(c => !newArray.includes(c))[0];
-                const datasets = this.chartData.datasets.filter(d => d.label  != removed);
+                this.chartData.datasets = this.chartData.datasets.filter(d => d.label  != removed);
                 this.countriesInfo = this.countriesInfo.filter(c => c.originalName != removed);
-                this.chartData = {labels: this.chartData.labels, datasets: datasets};
                 this.chartLoaded = true;
                 this.loading = false;
             } else {

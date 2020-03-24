@@ -27,6 +27,11 @@ export default {
 
         this.renderChart(this.chartData, { responsive: true });
     },
+    watch: {
+        'chartData.datasets': function () {
+            this.$data._chart.update();
+        }
+    },
     computed: {
         chartStyle: function () {
             const height = this.windowWidth >= 600 ? '450px' : '500px';
