@@ -145,13 +145,7 @@ export default {
     },
     mounted () {
         const country = this.$route.query.country || 'Global';
-        const historyUrl = `https://covid-api-wrapper.herokuapp.com/history?country=${country}`;
-
-        this.axios.get(historyUrl).then(res => {
-            this.loadInfo(res.data);
-            this.loadChartData(res.data.dates);
-            this.tableData = res.data.dates;
-        });
+        this.loadData(country);
 
         const countriesUrl = 'https://covid-api-wrapper.herokuapp.com/cases';
 
@@ -161,6 +155,32 @@ export default {
         });
     },
     methods: {
+        loadData: function (country) {
+            this.loading = true;
+            this.chartLoaded = false;
+            const confirmedUrl = `https://covid-api-wrapper.herokuapp.com/history?country=${country}`;
+
+            this.axios.get(confirmedUrl).then(res => {
+                this.loadInfo(res.data);
+                this.loadConfirmedData(res.data.dates);
+                this.tableData = res.data.dates;
+            });
+
+            const deathsUrl = `https://covid-api-wrapper.herokuapp.com/history?country=${country}&status=Deaths`;
+
+            this.axios.get(deathsUrl).then(res => {
+                this.loadDeathsData(res.data.dates);
+            })
+
+            const recoveredUrl = `https://covid-api-wrapper.herokuapp.com/history?country=${country}&status=Recovered`;
+
+            this.axios.get(recoveredUrl).then(res => {
+                this.loadRecoveredData(res.data.dates);
+            }).finally(() => {
+                this.loading = false;
+                this.chartLoaded = true;
+            });
+        },
         loadInfo: function (data) {
             this.info.title = data.name;
             this.info.population = data.population;
@@ -168,38 +188,52 @@ export default {
             this.info.deaths = data.deaths;
             this.info.recovered = data.recovered;
         },
-        loadChartData: function (data) {
-            this.chartLoaded = false;
-            this.chartData = { labels: [], datasets: [] };
-
+        loadConfirmedData: function (data) {
             const sortedData = this.sort(data);
             this.chartData.labels = Object.keys(sortedData);
             this.chartData.datasets.push({
-                label: 'Casos confirmados',
-                backgroundColor: '#375a7f',
+                label: 'Confirmados',
+                borderColor: '#fb8c00',
                 data: Object.values(sortedData),
-                pointBorderWidth: 1,
-                pointBorderColor: '#1f344a',
+                fill: false,
+                pointBackgroundColor: '#fb8c00',
+                pointHoverBackgroundColor: '#fb8c00',
+                pointHoverBorderColor: '#fb8c00',
             });
-
-            this.chartLoaded = true;
+        },
+        loadDeathsData: function (data) {
+            const sortedData = this.sort(data);
+            this.chartData.labels = Object.keys(sortedData);
+            this.chartData.datasets.push({
+                label: 'Muertes',
+                borderColor: '#ff5252',
+                data: Object.values(sortedData),
+                fill: false,
+                pointBackgroundColor: '#ff5252',
+                pointHoverBackgroundColor: '#ff5252',
+                pointHoverBorderColor: '#ff5252',
+            });
+        },
+        loadRecoveredData: function (data) {
+            const sortedData = this.sort(data);
+            this.chartData.labels = Object.keys(sortedData);
+            this.chartData.datasets.push({
+                label: 'Recuperados',
+                borderColor: '#4caf50',
+                data: Object.values(sortedData),
+                fill: false,
+                pointBackgroundColor: '#4caf50',
+                pointHoverBackgroundColor: '#4caf50',
+                pointHoverBorderColor: '#4caf50',
+            });
         },
         loadCountriesData: function (data) {
             data.map(country => this.countries.push(country));
         },
         changeData: function (countryName) {
-            this.loading = true;
+            this.chartData = { labels: [], datasets: [] };
             this.$router.push({ query: { country: countryName }}).catch(err => {});
-
-            const historyUrl = `https://covid-api-wrapper.herokuapp.com/history?country=${countryName}`;
-
-            this.axios.get(historyUrl).then(res => {
-                this.loadInfo(res.data);
-                this.loadChartData(res.data.dates);
-                this.tableData = res.data.dates;
-
-                window.scrollTo(0, 0);
-            }).finally(() => this.loading = false);
+            this.loadData(countryName);
         },
         isSelected: function (countryName) {
             return this.$route.query.country == countryName
