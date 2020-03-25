@@ -40,14 +40,16 @@
             </v-col>
         </v-row>
 
-        <v-card class="px-6 pt-1 pb-6">
+        <v-card>
             <v-card-title>
                 Mostrando datos desde {{ lastDate | moment('from') }}
             </v-card-title>
-            <chart
-                v-if="chartLoaded"
-                :chart-data="chartData"
-            ></chart>
+            <v-card-text class="px-6 pt-1 pb-6">
+                <chart
+                    v-if="chartLoaded"
+                    :chart-data="chartData"
+                ></chart>
+            </v-card-text>
         </v-card>
 
         <div class="mt-12 d-flex flex-column flex-sm-row justify-space-between">
