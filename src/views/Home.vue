@@ -38,18 +38,6 @@
                     </v-card-text>
                 </v-card>
             </v-col>
-            <v-col>
-                <v-card class="border-top-success">
-                    <v-card-title class="d-flex justify-space-between">
-                        Recuperados
-                        <v-icon dark class="success--text">mdi-heart</v-icon>
-                    </v-card-title>
-                    <v-card-text class="display-1">
-                        {{ info.recovered | formatNumber }}
-                        <span class="body-1 blue-grey--text">{{ percentageDifference(info.population, info.recovered) | percentage }}</span>
-                    </v-card-text>
-                </v-card>
-            </v-col>
         </v-row>
 
         <v-card class="px-2 pt-1 pb-4">
@@ -130,8 +118,7 @@ export default {
                 title: '',
                 population: 0,
                 confirmed: 0,
-                deaths: 0,
-                recovered: 0,
+                deaths: 0
             },
             chartLoaded: false,
             chartData: {
@@ -172,12 +159,6 @@ export default {
 
             this.axios.get(deathsUrl).then(res => {
                 this.loadDeathsData(res.data.dates);
-            })
-
-            const recoveredUrl = `https://covid-api-wrapper.herokuapp.com/history?country=${country}&status=Recovered`;
-
-            this.axios.get(recoveredUrl).then(res => {
-                this.loadRecoveredData(res.data.dates);
             }).finally(() => {
                 this.loading = false;
                 this.chartLoaded = true;
@@ -188,7 +169,6 @@ export default {
             this.info.population = data.population;
             this.info.confirmed = data.confirmed;
             this.info.deaths = data.deaths;
-            this.info.recovered = data.recovered;
         },
         loadConfirmedData: function (data) {
             const sortedData = this.sort(data);
@@ -214,19 +194,6 @@ export default {
                 pointBackgroundColor: '#ff5252',
                 pointHoverBackgroundColor: '#ff5252',
                 pointHoverBorderColor: '#ff5252',
-            });
-        },
-        loadRecoveredData: function (data) {
-            const sortedData = this.sort(data);
-            this.chartData.labels = Object.keys(sortedData);
-            this.chartData.datasets.push({
-                label: 'Recuperados',
-                borderColor: '#4caf50',
-                data: Object.values(sortedData),
-                fill: false,
-                pointBackgroundColor: '#4caf50',
-                pointHoverBackgroundColor: '#4caf50',
-                pointHoverBorderColor: '#4caf50',
             });
         },
         loadCountriesData: function (data) {
