@@ -29,7 +29,6 @@
             <v-card>
                 <v-tabs
                     fixed-tabs
-                    background-color="#1e1e1e"
                     center-active
                     show-arrows
                 >

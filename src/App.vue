@@ -8,6 +8,15 @@
             <v-btn to="/compare" icon>
                 <v-icon>mdi-chart-line</v-icon>
             </v-btn>
+            <div class="ml-3">
+                <v-switch
+                    v-model="$vuetify.theme.dark"
+                    hide-details
+                    flat
+                    :ripple="false"
+                >
+                </v-switch>
+            </div>
         </v-app-bar>
 
         <v-content>
