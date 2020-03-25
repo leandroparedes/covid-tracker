@@ -62,7 +62,14 @@
                             class="pa-1"
                         >
                             <v-card-title class="pb-0">
-                                <div class="text-truncate">{{ country.name }}</div>
+                                <div class="text-truncate">
+                                    <router-link :to="{
+                                        path: '/',
+                                        query: { country: country.originalName }
+                                    }">
+                                        {{ country.name }}
+                                    </router-link>
+                                </div>
                             </v-card-title>
                             <v-card-text>
                                 <v-row>
