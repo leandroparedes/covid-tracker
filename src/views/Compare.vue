@@ -20,8 +20,8 @@
                     :input-value="data.selected"
                     close
                     @click="data.select"
-                    @click:close="remove(data.item)"
-                >{{ data.item }}</v-chip>
+                    @click:close="remove(data.item.value)"
+                >{{ data.item.text }}</v-chip>
             </template>
         </v-autocomplete>
 
@@ -137,7 +137,10 @@ export default {
 
         this.axios.get(countriesUrl).then(res => {
             res.data.map(country => {
-                this.countries.push(country.originalName);
+                this.countries.push({
+                    text: country.name,
+                    value: country.originalName
+                });
             });
         });
     },
@@ -210,7 +213,7 @@ export default {
                     const sortedData = this.sort(res.data.dates);
                     this.confirmedChartData.labels = Object.keys(sortedData);
                     this.confirmedChartData.datasets.push({
-                        label: res.data.originalName,
+                        label: res.data.name,
                         borderColor: color,
                         fill: false,
                         data: Object.values(sortedData),
@@ -224,7 +227,7 @@ export default {
                     const sortedData = this.sort(res.data.dates);
                     this.deathsChartData.labels = Object.keys(sortedData);
                     this.deathsChartData.datasets.push({
-                        label: res.data.originalName,
+                        label: res.data.name,
                         borderColor: color,
                         fill: false,
                         data: Object.values(sortedData),
