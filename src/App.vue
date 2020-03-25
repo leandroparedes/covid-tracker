@@ -8,32 +8,35 @@
             <v-btn to="/compare" icon>
                 <v-icon>mdi-chart-line</v-icon>
             </v-btn>
-                <v-switch
-                    v-model="$vuetify.theme.dark"
-                    hide-details
-                    flat
-                    :ripple="false"
-                >
-                </v-switch>
-                <v-menu bottom left>
-                    <template v-slot:activator="{ on }">
-                        <v-btn
-                            icon
-                            v-on="on"
-                        >
-                            {{ $vuetify.lang.current }}
-                        </v-btn>
-                    </template>
-                    <v-list>
-                        <v-list-item
-                            v-for="(lang, i) in languages"
-                            :key="i"
-                            @click="changeLocale(lang.locale)"
-                        >
-                            <v-list-item-title>{{ lang.name }}</v-list-item-title>
-                        </v-list-item>
-                    </v-list>
-                </v-menu>
+
+            <v-switch
+                v-model="$vuetify.theme.dark"
+                hide-details
+                flat
+                :ripple="false"
+                class="ml-2"
+            >
+            </v-switch>
+
+            <v-menu bottom left>
+                <template v-slot:activator="{ on }">
+                    <v-btn
+                        icon
+                        v-on="on"
+                    >
+                        {{ $vuetify.lang.current }}
+                    </v-btn>
+                </template>
+                <v-list>
+                    <v-list-item
+                        v-for="(lang, i) in languages"
+                        :key="i"
+                        @click="changeLocale(lang.locale)"
+                    >
+                        <v-list-item-title>{{ lang.name }}</v-list-item-title>
+                    </v-list-item>
+                </v-list>
+            </v-menu>
         </v-app-bar>
 
         <v-content>
