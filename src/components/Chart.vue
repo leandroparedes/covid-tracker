@@ -84,6 +84,13 @@ export default {
                         unitStepSize: window.innerWidth >= 600 ? 5 : 15
                     }
                 }]
+            },
+            elements: {
+                point: {
+                    hoverRadius: window.innerWidth >= 600 ? 8 : 4,
+                    hoverBackgroundColor: '#fff',
+                    hoverBorderWidth: window.innerWidth >= 600 ? 4 : 2,
+                }
             }
         });
     },

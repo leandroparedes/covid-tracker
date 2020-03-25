@@ -184,9 +184,7 @@ export default {
                 borderColor: '#2196f3',
                 data: Object.values(sortedData),
                 fill: false,
-                pointBackgroundColor: '#2196f3',
-                pointHoverBackgroundColor: '#2196f3',
-                pointHoverBorderColor: '#2196f3',
+                pointBackgroundColor: '#2196f3'
             });
         },
         loadDeathsData: function (data) {
@@ -198,8 +196,6 @@ export default {
                 data: Object.values(sortedData),
                 fill: false,
                 pointBackgroundColor: '#ff5252',
-                pointHoverBackgroundColor: '#ff5252',
-                pointHoverBorderColor: '#ff5252',
             });
         },
         loadCountriesData: function (data) {

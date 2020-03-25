@@ -203,9 +203,7 @@ export default {
                         borderColor: color,
                         fill: false,
                         data: Object.values(sortedData),
-                        pointBackgroundColor: color,
-                        pointHoverBackgroundColor: color,
-                        pointHoverBorderColor: color,
+                        pointBackgroundColor: color
                     });
 
                     this.countriesInfo.push({
@@ -228,9 +226,7 @@ export default {
                         borderColor: color,
                         fill: false,
                         data: Object.values(sortedData),
-                        pointBackgroundColor: color,
-                        pointHoverBackgroundColor: color,
-                        pointHoverBorderColor: color,
+                        pointBackgroundColor: color
                     });
                 }).finally(() => {
                     this.deathsChartLoaded = true;
