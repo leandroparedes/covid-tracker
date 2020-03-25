@@ -81,7 +81,7 @@
             >
                 <v-hover v-slot:default="{ hover }">
                     <v-card
-                        :elevation="hover ? 20 : 2"
+                        :elevation="hover ? 10 : 2"
                         class="pa-1"
                         @click="changeData(country.originalName)"
                         :class="{'active' : isSelected(country.originalName)}"
