@@ -1,5 +1,6 @@
 <template>
     <div>
+        <div class="headline mb-5">Comparar países</div>
         <v-autocomplete
             v-model="values"
             :items="countries"
@@ -7,7 +8,7 @@
             chips
             small-chips
             clearable
-            label="Busca paises para compararlos"
+            label="Países"
             multiple
             ref="select"
             :disabled="loading"
@@ -35,13 +36,13 @@
                     <v-tab>Confirmados</v-tab>
                     <v-tab>Muertos</v-tab>
 
-                    <v-tab-item class="pa-4">
+                    <v-tab-item class="pa-6">
                         <chart
                             v-if="confirmedChartLoaded"
                             :chart-data="confirmedChartData"
                         ></chart>
                     </v-tab-item>
-                    <v-tab-item class="pa-4">
+                    <v-tab-item class="pa-6">
                         <chart
                             v-if="deathsChartLoaded"
                             :chart-data="deathsChartData"

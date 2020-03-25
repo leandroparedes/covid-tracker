@@ -3,7 +3,7 @@
         <div class="display-2 mb-4">{{ info.title }}</div>
 
         <v-row class="mb-3">
-            <v-col cols="12" sm="6" md="3">
+            <v-col cols="12" sm="4">
                 <v-card class="border-top-secondary">
                     <v-card-title class="d-flex justify-space-between">
                         Población
@@ -14,7 +14,7 @@
                     </v-card-text>
                 </v-card>
             </v-col>
-            <v-col cols="12" sm="6" md="3">
+            <v-col cols="12" sm="4">
                 <v-card class="border-top-primary">
                     <v-card-title class="d-flex justify-space-between">
                         Confirmados
@@ -26,7 +26,7 @@
                     </v-card-text>
                 </v-card>
             </v-col>
-            <v-col cols="12" sm="6" md="3">
+            <v-col cols="12" sm="4">
                 <v-card class="border-top-danger">
                     <v-card-title class="d-flex justify-space-between">
                         Muertos
@@ -40,7 +40,7 @@
             </v-col>
         </v-row>
 
-        <v-card class="px-2 pt-1 pb-4">
+        <v-card class="px-6 pt-1 pb-6">
             <v-card-title>
                 Mostrando datos desde {{ lastDate | moment('from') }}
             </v-card-title>
