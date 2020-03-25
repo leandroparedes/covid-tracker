@@ -34,7 +34,6 @@
                 >
                     <v-tab>Confirmados</v-tab>
                     <v-tab>Muertos</v-tab>
-                    <v-tab>Recuperados</v-tab>
 
                     <v-tab-item class="pa-4">
                         <chart
@@ -46,12 +45,6 @@
                         <chart
                             v-if="deathsChartLoaded"
                             :chart-data="deathsChartData"
-                        ></chart>
-                    </v-tab-item>
-                    <v-tab-item class="pa-4">
-                        <chart
-                            v-if="recoveredChartLoaded"
-                            :chart-data="recoveredChartData"
                         ></chart>
                     </v-tab-item>
                 </v-tabs>
@@ -84,10 +77,6 @@
                                     <v-col cols="6">
                                         <div class="overline">Muertos</div>
                                         <div class="body-2">{{ country.deaths | formatNumber }}</div>
-                                    </v-col>
-                                    <v-col cols="6">
-                                        <div class="overline">Recuperados</div>
-                                        <div class="body-2">{{ country.recovered | formatNumber }}</div>
                                     </v-col>
                                 </v-row>
                             </v-card-text>
@@ -132,11 +121,6 @@ export default {
                 labels: [],
                 datasets: []
             },
-            recoveredChartLoaded: false,
-            recoveredChartData: {
-                labels: [],
-                datasets: []
-            },
             countriesInfo: []
         }
     },
@@ -174,18 +158,15 @@ export default {
 
             this.confirmedChartLoaded = false;
             this.deathsChartLoaded = false;
-            this.recoveredChartLoaded = false;
 
             if (newArray.length == 0) {
                 this.confirmedChartData.datasets = [];
                 this.deathsChartData.datasets = [];
-                this.recoveredChartData.datasets = [];
 
                 this.countriesInfo = [];
 
                 this.confirmedChartLoaded = true;
                 this.deathsChartLoaded = true;
-                this.recoveredChartLoaded = true;
 
                 this.loading = false;
             } else if (newArray.length < oldArray.length) {
@@ -193,20 +174,17 @@ export default {
 
                 this.confirmedChartData.datasets = this.confirmedChartData.datasets.filter(d => d.label  != removed);
                 this.deathsChartData.datasets = this.deathsChartData.datasets.filter(d => d.label  != removed);
-                this.recoveredChartData.datasets = this.recoveredChartData.datasets.filter(d => d.label  != removed);
 
                 this.countriesInfo = this.countriesInfo.filter(c => c.originalName != removed);
 
                 this.confirmedChartLoaded = true;
                 this.deathsChartLoaded = true;
-                this.recoveredChartLoaded = true;
                 this.loading = false;
             } else {
                 const lastAdded = newArray.length > 0 ? newArray[newArray.length -1] : newArray[0];
 
                 const confirmedUrl = `https://covid-api-wrapper.herokuapp.com/history?country=${lastAdded}&status=Confirmed`;
                 const deathsUrl = `https://covid-api-wrapper.herokuapp.com/history?country=${lastAdded}&status=Deaths`;
-                const recoveredUrl = `https://covid-api-wrapper.herokuapp.com/history?country=${lastAdded}&status=Recovered`;
 
                 const color = this.getColor();
                 this.axios.get(confirmedUrl).then(res => {
@@ -248,22 +226,6 @@ export default {
                     });
                 }).finally(() => {
                     this.deathsChartLoaded = true;
-                });
-
-                this.axios.get(recoveredUrl).then(res => {
-                    const sortedData = this.sort(res.data.dates);
-                    this.recoveredChartData.labels = Object.keys(sortedData);
-                    this.recoveredChartData.datasets.push({
-                        label: res.data.originalName,
-                        borderColor: color,
-                        fill: false,
-                        data: Object.values(sortedData),
-                        pointBackgroundColor: color,
-                        pointHoverBackgroundColor: color,
-                        pointHoverBorderColor: color,
-                    });
-                }).finally(() => {
-                    this.recoveredChartLoaded = true;
                     this.loading = false;
                 });
             }
