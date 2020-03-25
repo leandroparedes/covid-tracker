@@ -1,13 +1,13 @@
 <template>
     <v-app>
-        <v-app-bar app dense>
+        <v-app-bar app>
             <router-link to="/" tag="div" style="cursor:pointer" class="v-toolbar__title">Covid-T</router-link>
 
             <v-spacer></v-spacer>
 
-            <router-link to="/compare" tag="div" style="cursor:pointer">
-                <v-icon>mdi-chart-line</v-icon> <span class="ml-1">Comparar paises</span>
-            </router-link>
+            <v-btn to="/compare" icon>
+                <v-icon>mdi-chart-line</v-icon>
+            </v-btn>
         </v-app-bar>
 
         <v-content>
