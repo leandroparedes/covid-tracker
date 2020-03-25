@@ -6,7 +6,7 @@
             <v-col cols="12" sm="4">
                 <v-card class="border-top-secondary">
                     <v-card-title class="d-flex justify-space-between">
-                        Población
+                        {{ $vuetify.lang.t('$vuetify.population') }}
                         <v-icon dark class="secondary--text">mdi-human-male</v-icon>
                     </v-card-title>
                     <v-card-text class="display-1">
@@ -17,7 +17,7 @@
             <v-col cols="12" sm="4">
                 <v-card class="border-top-primary">
                     <v-card-title class="d-flex justify-space-between">
-                        Confirmados
+                        {{ $vuetify.lang.t('$vuetify.confirmed') }}
                         <v-icon dark class="primary--text">mdi-check</v-icon>
                     </v-card-title>
                     <v-card-text class="display-1">
@@ -29,7 +29,7 @@
             <v-col cols="12" sm="4">
                 <v-card class="border-top-danger">
                     <v-card-title class="d-flex justify-space-between">
-                        Muertos
+                        {{ $vuetify.lang.t('$vuetify.deaths') }}
                         <v-icon dark class="error--text">mdi-coffin</v-icon>
                     </v-card-title>
                     <v-card-text class="display-1">
@@ -42,7 +42,10 @@
 
         <v-card>
             <v-card-title>
-                Mostrando datos desde {{ lastDate | moment('from') }}
+                {{ $vuetify.lang.t(
+                    '$vuetify.showingDataFrom',
+                    $moment(lastDate).locale($vuetify.lang.current).fromNow()
+                ) }}
             </v-card-title>
             <v-card-text class="px-6 pt-1 pb-6">
                 <chart
@@ -53,11 +56,13 @@
         </v-card>
 
         <div class="mt-12 d-flex flex-column flex-sm-row justify-space-between">
-            <div class="display-2">Paises</div>
+            <div class="display-2">
+                {{ $vuetify.lang.t('$vuetify.countries') }}
+            </div>
             <div class="mt-4 mt-sm-0">
                 <v-text-field
                     v-model="searchInput"
-                    label="Buscar un país"
+                    :label="$vuetify.lang.t('$vuetify.searchCountry')"
                     outlined
                     clearable
                     required
@@ -70,7 +75,7 @@
             v-if="searchInput"
             class="headline mb-3"
         >
-            Buscando <span class="blue--text">{{ searchInput }}</span>
+            {{ $vuetify.lang.t('$vuetify.searching') }} <span class="blue--text">{{ searchInput }}</span>
         </div>
 
         <v-row>
@@ -90,7 +95,9 @@
                         <v-card-title>
                             <div class="text-truncate">{{ country.name }}</div>
                         </v-card-title>
-                        <v-card-subtitle>Casos confirmados</v-card-subtitle>
+                        <v-card-subtitle>
+                            {{ $vuetify.lang.t('$vuetify.confirmedCases') }}
+                        </v-card-subtitle>
                         <v-card-text>
                             <span class="display-1">{{ country.confirmed | formatNumber }}</span>
                             <span class="body-1 blue-grey--text">
@@ -182,7 +189,7 @@ export default {
             const sortedData = this.sort(data);
             this.chartData.labels = Object.keys(sortedData);
             this.chartData.datasets.push({
-                label: 'Confirmados',
+                label: this.$vuetify.lang.t('$vuetify.confirmed'),
                 borderColor: '#2196f3',
                 data: Object.values(sortedData),
                 fill: false,
@@ -193,7 +200,7 @@ export default {
             const sortedData = this.sort(data);
             this.chartData.labels = Object.keys(sortedData);
             this.chartData.datasets.push({
-                label: 'Muertos',
+                label: this.$vuetify.lang.t('$vuetify.deaths'),
                 borderColor: '#ff5252',
                 data: Object.values(sortedData),
                 fill: false,

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="headline mb-5">Comparar países</div>
+        <div class="headline mb-5">{{ $vuetify.lang.t('$vuetify.compareCountries') }}</div>
         <v-autocomplete
             v-model="values"
             :items="countries"
@@ -8,7 +8,7 @@
             chips
             small-chips
             clearable
-            label="Países"
+            :label="$vuetify.lang.t('$vuetify.selectCountries')"
             multiple
             ref="select"
             :disabled="loading"
@@ -32,8 +32,8 @@
                     center-active
                     show-arrows
                 >
-                    <v-tab>Confirmados</v-tab>
-                    <v-tab>Muertos</v-tab>
+                    <v-tab>{{ $vuetify.lang.t('$vuetify.confirmed') }}</v-tab>
+                    <v-tab>{{ $vuetify.lang.t('$vuetify.deaths') }}</v-tab>
 
                     <v-tab-item class="pa-6">
                         <chart
@@ -74,15 +74,15 @@
                             <v-card-text>
                                 <v-row>
                                     <v-col cols="6">
-                                        <div class="overline">Población</div>
+                                        <div class="overline">{{ $vuetify.lang.t('$vuetify.population') }}</div>
                                         <div class="body-2">{{ country.population | formatNumber }}</div>
                                     </v-col>
                                     <v-col cols="6">
-                                        <div class="overline">Confirmados</div>
+                                        <div class="overline">{{ $vuetify.lang.t('$vuetify.confirmed') }}</div>
                                         <div class="body-2">{{ country.confirmed | formatNumber }}</div>
                                     </v-col>
                                     <v-col cols="6">
-                                        <div class="overline">Muertos</div>
+                                        <div class="overline">{{ $vuetify.lang.t('$vuetify.deaths') }}</div>
                                         <div class="body-2">{{ country.deaths | formatNumber }}</div>
                                     </v-col>
                                 </v-row>
@@ -92,12 +92,17 @@
                 </v-col>
             </v-row>
         </div>
-        <div v-else class="text-center pa-4 font-weight-light font-italic">
-            No hay paises seleccionados
+        <div v-else class="text-center pa-4">
+            <div class="mb-4">
+                <v-icon size="100" color="grey darken-1">mdi-earth</v-icon>
+            </div>
+            <div class="title font-weight-bold grey--text text--darken-1">
+                {{ $vuetify.lang.t('$vuetify.noSelectedCountries') }}
+            </div>
         </div>
 
         <div class="text-center mt-8">
-            <router-link to="/">Volver al inicio</router-link>
+            <router-link to="/">{{ $vuetify.lang.t('$vuetify.backToHome') }}</router-link>
         </div>
 
         <v-overlay :value="loading">
