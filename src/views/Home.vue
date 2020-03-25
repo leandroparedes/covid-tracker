@@ -230,7 +230,11 @@ export default {
     },
     computed: {
         lastDate: function () {
-            return Object.keys(this.tableData)[Object.keys(this.tableData).length - 1];
+            if (this.tableData) {
+                return Object.keys(this.tableData)[Object.keys(this.tableData).length - 1];
+            } else {
+                return Date.now();
+            }
         }
     }
 }
