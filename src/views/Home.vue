@@ -193,7 +193,7 @@ export default {
             const sortedData = this.sort(data);
             this.chartData.labels = Object.keys(sortedData);
             this.chartData.datasets.push({
-                label: 'Muertes',
+                label: 'Muertos',
                 borderColor: '#ff5252',
                 data: Object.values(sortedData),
                 fill: false,
