@@ -47,5 +47,7 @@ export default {
     compareCountries: 'Compare countries',
     selectCountries: 'Select countries',
     noSelectedCountries: 'There are no selected countries',
-    backToHome: 'Back to home'
+    backToHome: 'Back to home',
+    english: 'English',
+    spanish: 'Spanish'
 }

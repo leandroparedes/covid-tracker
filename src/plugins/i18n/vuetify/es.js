@@ -47,5 +47,7 @@ export default {
     compareCountries: 'Comparar países',
     selectCountries: 'Seleccionar países',
     noSelectedCountries: 'No hay países seleccionados',
-    backToHome: 'Volver al inicio'
+    backToHome: 'Volver al inicio',
+    english: 'Inglés',
+    spanish: 'Español'
 }

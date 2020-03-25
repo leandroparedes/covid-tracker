@@ -33,7 +33,9 @@
                         :key="i"
                         @click="changeLocale(lang.locale)"
                     >
-                        <v-list-item-title>{{ lang.name }}</v-list-item-title>
+                        <v-list-item-title>
+                            {{ $vuetify.lang.t(`$vuetify.${lang.name}`) }}
+                        </v-list-item-title>
                     </v-list-item>
                 </v-list>
             </v-menu>
@@ -55,11 +57,11 @@ export default {
             languages: [
                 {
                     locale: 'en',
-                    name: 'English'
+                    name: 'english'
                 },
                 {
                     locale: 'es',
-                    name: 'Spanish'
+                    name: 'spanish'
                 }
             ]
         }
