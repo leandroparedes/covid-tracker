@@ -64,6 +64,22 @@ export default {
             hover: {
                 mode: 'index',
                 intersect: false
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        callback: function (value, index,values) {
+                            return Intl.NumberFormat('de-DE').format(value);
+                        }
+                    }
+                }],
+                xAxes: [{
+                    type: 'time',
+                    time: {
+                        unit: 'day',
+                        unitStepSize: window.innerWidth >= 600 ? 5 : 15
+                    }
+                }]
             }
         });
     },
