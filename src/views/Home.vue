@@ -147,10 +147,16 @@ export default {
         loadData: function (country) {
             this.loading = true;
             this.chartLoaded = false;
+
+            const countryInfoUrl = `https://covid-api-wrapper.herokuapp.com/cases?country=${country}`;
+            
+            this.axios.get(countryInfoUrl).then(res => {
+                this.loadInfo(res.data);
+            });
+
             const confirmedUrl = `https://covid-api-wrapper.herokuapp.com/history?country=${country}`;
 
             this.axios.get(confirmedUrl).then(res => {
-                this.loadInfo(res.data);
                 this.loadConfirmedData(res.data.dates);
                 this.tableData = res.data.dates;
             });
