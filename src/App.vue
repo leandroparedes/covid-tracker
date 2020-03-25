@@ -8,7 +8,6 @@
             <v-btn to="/compare" icon>
                 <v-icon>mdi-chart-line</v-icon>
             </v-btn>
-            <div class="ml-3">
                 <v-switch
                     v-model="$vuetify.theme.dark"
                     hide-details
@@ -16,7 +15,25 @@
                     :ripple="false"
                 >
                 </v-switch>
-            </div>
+                <v-menu bottom left>
+                    <template v-slot:activator="{ on }">
+                        <v-btn
+                            icon
+                            v-on="on"
+                        >
+                            {{ $vuetify.lang.current }}
+                        </v-btn>
+                    </template>
+                    <v-list>
+                        <v-list-item
+                            v-for="(lang, i) in languages"
+                            :key="i"
+                            @click="changeLocale(lang.locale)"
+                        >
+                            <v-list-item-title>{{ lang.name }}</v-list-item-title>
+                        </v-list-item>
+                    </v-list>
+                </v-menu>
         </v-app-bar>
 
         <v-content>
@@ -29,7 +46,26 @@
 
 <script>
 export default {
-    name: 'App'
+    name: 'App',
+    data: function () {
+        return {
+            languages: [
+                {
+                    locale: 'en',
+                    name: 'English'
+                },
+                {
+                    locale: 'es',
+                    name: 'Spanish'
+                }
+            ]
+        }
+    },
+    methods: {
+        changeLocale: function (locale) {
+            this.$vuetify.lang.current = locale;
+        }
+    }
 };
 </script>
 
