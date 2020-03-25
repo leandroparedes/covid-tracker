@@ -191,8 +191,19 @@ export default {
             } else {
                 const lastAdded = newArray.length > 0 ? newArray[newArray.length -1] : newArray[0];
 
+                const countryInfoUrl = `https://covid-api-wrapper.herokuapp.com/cases?country=${lastAdded}`;
                 const confirmedUrl = `https://covid-api-wrapper.herokuapp.com/history?country=${lastAdded}&status=Confirmed`;
                 const deathsUrl = `https://covid-api-wrapper.herokuapp.com/history?country=${lastAdded}&status=Deaths`;
+
+                this.axios.get(countryInfoUrl).then(res => {
+                    this.countriesInfo.push({
+                        name: res.data.name,
+                        originalName: res.data.originalName,
+                        population: res.data.population,
+                        confirmed: res.data.confirmed,
+                        deaths: res.data.deaths
+                    });
+                });
 
                 const color = this.getColor();
                 this.axios.get(confirmedUrl).then(res => {
@@ -204,15 +215,6 @@ export default {
                         fill: false,
                         data: Object.values(sortedData),
                         pointBackgroundColor: color
-                    });
-
-                    this.countriesInfo.push({
-                        name: res.data.name,
-                        originalName: res.data.originalName,
-                        population: res.data.population,
-                        confirmed: res.data.confirmed,
-                        deaths: res.data.deaths,
-                        recovered: res.data.recovered
                     });
                 }).finally(() => {
                     this.confirmedChartLoaded = true;
