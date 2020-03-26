@@ -1,19 +1,14 @@
-# covid
+# Covid-t
+## Coronavirus tracker and country data comparison
 
-## Project setup
-```
-npm install
-```
+![Home Screen](/images/home.png)
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+### Search countries
+![Search countries](/images/countries_search.png)
 
-### Compiles and minifies for production
-```
-npm run build
-```
+### Compare
+![Compare](/images/comparison.png)
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Switch between dark and light mode
+![Dark and light modes](/images/home_dark.png)
+
