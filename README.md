@@ -1,5 +1,6 @@
-# Covid-t
+# Covid-T
 ## Coronavirus tracker and country data comparison
+
 
 ![Home Screen](/images/home.png)
 
@@ -11,4 +12,7 @@
 
 ### Switch between dark and light mode
 ![Dark and light modes](/images/home_dark.png)
+
+### Data source
+https://github.com/M-Media-Group/Covid-19-API
 
