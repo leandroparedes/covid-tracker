@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="display-2 mb-4">{{ info.title }}</div>
+        <div class="display-2 mb-4">{{ translatedName(selectedCountry) }}</div>
 
         <v-row class="mb-3">
             <v-col cols="12" sm="4">
@@ -10,7 +10,7 @@
                         <v-icon dark class="secondary--text">mdi-human-male</v-icon>
                     </v-card-title>
                     <v-card-text class="display-1">
-                        {{ info.population | formatNumber }}
+                        {{ selectedCountry.population | formatNumber }}
                     </v-card-text>
                 </v-card>
             </v-col>
@@ -21,8 +21,8 @@
                         <v-icon dark class="primary--text">mdi-check</v-icon>
                     </v-card-title>
                     <v-card-text class="display-1">
-                        {{ info.confirmed | formatNumber }}
-                        <span class="body-1 blue-grey--text">{{ percentageDifference(info.population, info.confirmed) | percentage }}</span>
+                        {{ selectedCountry.confirmed | formatNumber }}
+                        <span class="body-1 blue-grey--text">{{ percentageDifference(selectedCountry.population, selectedCountry.confirmed) | percentage }}</span>
                     </v-card-text>
                 </v-card>
             </v-col>
@@ -33,8 +33,8 @@
                         <v-icon dark class="error--text">mdi-coffin</v-icon>
                     </v-card-title>
                     <v-card-text class="display-1">
-                        {{ info.deaths | formatNumber }}
-                        <span class="body-1 blue-grey--text">{{ percentageDifference(info.population, info.deaths) | percentage }}</span>
+                        {{ selectedCountry.deaths | formatNumber }}
+                        <span class="body-1 blue-grey--text">{{ percentageDifference(selectedCountry.population, selectedCountry.deaths) | percentage }}</span>
                     </v-card-text>
                 </v-card>
             </v-col>
@@ -93,7 +93,9 @@
                         :disabled="isSelected(country.originalName)"
                     >
                         <v-card-title>
-                            <div class="text-truncate">{{ country.name }}</div>
+                            <div class="text-truncate">
+                                {{ translatedName(country) }}
+                            </div>
                         </v-card-title>
                         <v-card-subtitle>
                             {{ $vuetify.lang.t('$vuetify.confirmedCases') }}
@@ -123,12 +125,7 @@ export default {
     components: { Chart },
     data: function () {
         return {
-            info: {
-                title: '',
-                population: 0,
-                confirmed: 0,
-                deaths: 0
-            },
+            selectedCountry: null,
             chartLoaded: false,
             chartData: {
                 labels: [],
@@ -160,7 +157,7 @@ export default {
             const countryInfoUrl = `https://covid-api-wrapper.herokuapp.com/cases?country=${country}`;
             
             this.axios.get(countryInfoUrl).then(res => {
-                this.loadInfo(res.data);
+                this.selectedCountry = res.data;
             });
 
             const confirmedUrl = `https://covid-api-wrapper.herokuapp.com/history?country=${country}`;
@@ -178,12 +175,6 @@ export default {
                 this.loading = false;
                 this.chartLoaded = true;
             });
-        },
-        loadInfo: function (data) {
-            this.info.title = data.name;
-            this.info.population = data.population;
-            this.info.confirmed = data.confirmed;
-            this.info.deaths = data.deaths;
         },
         loadConfirmedData: function (data) {
             const sortedData = this.sort(data);
@@ -228,6 +219,17 @@ export default {
         },
         clearSearchInput: function () {
             this.searchInput = '';
+        },
+        translatedName: function (country) {
+            if (country) {
+                switch (this.$vuetify.lang.current) {
+                    case 'es': return country.name_es || country.name; break;
+                    case 'en': return country.name; break;
+                    default: return country.name;
+                }
+            } else {
+                return '';
+            }
         }
     },
     watch: {
