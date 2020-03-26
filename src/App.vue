@@ -46,6 +46,24 @@
                 <router-view></router-view>
             </v-container>
         </v-content>
+
+        <v-footer
+            padless
+            class="font-weight-medium"
+            >
+            <v-col
+                class="text-center"
+                cols="12"
+            >
+                {{ new Date().getFullYear() }} —
+                <strong>{{ $vuetify.lang.t('$vuetify.developedBy') }}
+                    <a href="https://github.com/leandroparedes" target="_blank">
+                        Leandro Paredes
+                    </a>
+                </strong>
+                
+            </v-col>
+        </v-footer>
     </v-app>
 </template>
 

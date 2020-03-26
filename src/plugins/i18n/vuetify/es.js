@@ -49,5 +49,6 @@ export default {
     noSelectedCountries: 'No hay países seleccionados',
     backToHome: 'Volver al inicio',
     english: 'Inglés',
-    spanish: 'Español'
+    spanish: 'Español',
+    developedBy: 'Desarrollada por'
 }

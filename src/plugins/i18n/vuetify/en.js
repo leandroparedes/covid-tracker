@@ -49,5 +49,6 @@ export default {
     noSelectedCountries: 'There are no selected countries',
     backToHome: 'Back to home',
     english: 'English',
-    spanish: 'Spanish'
+    spanish: 'Spanish',
+    developedBy: 'Developed by'
 }
