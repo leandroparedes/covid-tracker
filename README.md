@@ -13,6 +13,9 @@
 ### Switch between dark and light mode
 ![Dark and light modes](/images/home_dark.png)
 
+### Also available in Spanish
+![Search countries spanish](/images/countries_search_es.png)
+
 ### Data source
 https://github.com/M-Media-Group/Covid-19-API
 
