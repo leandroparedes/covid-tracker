@@ -202,8 +202,8 @@ export default {
             } else if (newArray.length < oldArray.length) {
                 const removed = oldArray.filter(c => !newArray.includes(c))[0];
 
-                this.confirmedChartData.datasets = this.confirmedChartData.datasets.filter(d => d.label  != removed);
-                this.deathsChartData.datasets = this.deathsChartData.datasets.filter(d => d.label  != removed);
+                this.confirmedChartData.datasets = this.confirmedChartData.datasets.filter(d => d._countryName  != removed);
+                this.deathsChartData.datasets = this.deathsChartData.datasets.filter(d => d._countryName  != removed);
 
                 this.countriesInfo = this.countriesInfo.filter(c => c.originalName != removed);
 
@@ -237,7 +237,8 @@ export default {
                         borderColor: color,
                         fill: false,
                         data: Object.values(sortedData),
-                        pointBackgroundColor: color
+                        pointBackgroundColor: color,
+                        _countryName: res.data.originalName
                     });
                 }).finally(() => {
                     this.confirmedChartLoaded = true;
@@ -251,7 +252,8 @@ export default {
                         borderColor: color,
                         fill: false,
                         data: Object.values(sortedData),
-                        pointBackgroundColor: color
+                        pointBackgroundColor: color,
+                        _countryName: res.data.originalName
                     });
                 }).finally(() => {
                     this.deathsChartLoaded = true;
