@@ -2,43 +2,7 @@
     <div>
         <div class="display-2 mb-4">{{ translatedName(selectedCountry) }}</div>
 
-        <v-row class="mb-3">
-            <v-col cols="12" sm="4">
-                <v-card class="border-top-secondary">
-                    <v-card-title class="d-flex justify-space-between">
-                        {{ $vuetify.lang.t('$vuetify.population') }}
-                        <v-icon dark class="secondary--text">mdi-human-male</v-icon>
-                    </v-card-title>
-                    <v-card-text class="display-1">
-                        {{ selectedCountry.population | formatNumber }}
-                    </v-card-text>
-                </v-card>
-            </v-col>
-            <v-col cols="12" sm="4">
-                <v-card class="border-top-primary">
-                    <v-card-title class="d-flex justify-space-between">
-                        {{ $vuetify.lang.t('$vuetify.confirmed') }}
-                        <v-icon dark class="primary--text">mdi-check</v-icon>
-                    </v-card-title>
-                    <v-card-text class="display-1">
-                        {{ selectedCountry.confirmed | formatNumber }}
-                        <span class="body-1 blue-grey--text">{{ percentageDifference(selectedCountry.population, selectedCountry.confirmed) | percentage }}</span>
-                    </v-card-text>
-                </v-card>
-            </v-col>
-            <v-col cols="12" sm="4">
-                <v-card class="border-top-danger">
-                    <v-card-title class="d-flex justify-space-between">
-                        {{ $vuetify.lang.t('$vuetify.deaths') }}
-                        <v-icon dark class="error--text">mdi-coffin</v-icon>
-                    </v-card-title>
-                    <v-card-text class="display-1">
-                        {{ selectedCountry.deaths | formatNumber }}
-                        <span class="body-1 blue-grey--text">{{ percentageDifference(selectedCountry.population, selectedCountry.deaths) | percentage }}</span>
-                    </v-card-text>
-                </v-card>
-            </v-col>
-        </v-row>
+        <country-daily-info :country="selectedCountry"></country-daily-info>
 
         <v-card>
             <v-card-title>
@@ -118,10 +82,14 @@
 
 <script>
 import Chart from '@/components/Chart.vue';
+import CountryDailyInfo from '@/components/CountryDailyInfo.vue';
 
 export default {
     name: 'home',
-    components: { Chart },
+    components: { 
+        Chart,
+        CountryDailyInfo
+    },
     data: function () {
         return {
             selectedCountry: null,
@@ -213,9 +181,6 @@ export default {
         sort: function (o) {
             return Object.keys(o).sort().reduce((r, k) => (r[k] = o[k], r), {});
         },
-        percentageDifference: function (value_a, value_b) {
-            return ((value_b * 100) / value_a).toFixed(5);
-        },
         clearSearchInput: function () {
             this.searchInput = '';
         },
@@ -253,18 +218,6 @@ export default {
 </script>
 
 <style scoped>
-    .border-top-primary {
-        border-top: 3px solid #2196f3 !important;
-    }
-    .border-top-secondary {
-        border-top: 3px solid #424242 !important;
-    }
-    .border-top-danger {
-        border-top: 3px solid #ff5252 !important;
-    }
-    .border-top-success {
-        border-top: 3px solid #4caf50 !important;
-    }
     .active {
         color: #2196f3 !important;
         border: 1px solid #2196f3 !important;
