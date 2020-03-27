@@ -178,9 +178,6 @@ export default {
             return this.$route.query.country == countryName
                         || (! this.$route.query.country && countryName == 'Global');
         },
-        sort: function (o) {
-            return Object.keys(o).sort().reduce((r, k) => (r[k] = o[k], r), {});
-        },
         clearSearchInput: function () {
             this.searchInput = '';
         },

@@ -21,7 +21,10 @@ Vue.mixin({
     methods: {
         percentageDifference: function (value_a, value_b, toFixed) {
             return ((value_b * 100) / value_a).toFixed(toFixed || 5);
-        }
+        },
+        sort: function (o) {
+            return Object.keys(o).sort().reduce((r, k) => (r[k] = o[k], r), {});
+        },
     }
   })
 

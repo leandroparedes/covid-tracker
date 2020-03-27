@@ -150,9 +150,6 @@ export default {
         });
     },
     methods: {
-        sort: function (o) {
-            return Object.keys(o).sort().reduce((r, k) => (r[k] = o[k], r), {});
-        },
         getColor: function () {
             var color = Math.floor(Math.random() * 16777216).toString(16);
             return '#000000'.slice(0, -color.length) + color;
