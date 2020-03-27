@@ -140,18 +140,30 @@ export default {
                 path: '/',
                 query: { country: countryName }
             });
+        },
+        loadChartData: function (data, options) {
+            const sortedData = this.sort(data);
+            options.chart.labels = Object.keys(sortedData);
+            options.chart.datasets.push({
+                label: options.label,
+                borderColor: options.color,
+                fill: false,
+                data: Object.values(sortedData),
+                pointBackgroundColor: options.color,
+                _countryName: options.countryOriginalName
+            });
         }
     },
     watch: {
         values: function (newArray, oldArray) {
             this.loading = true;
+            this.confirmedChartLoaded = false;
+            this.deathsChartLoaded = false;
 
+            // close autocomplete menu on select
             setTimeout(() => {
                 this.$refs.select.isMenuActive = false
             }, 50);
-
-            this.confirmedChartLoaded = false;
-            this.deathsChartLoaded = false;
 
             if (newArray.length == 0) {
                 this.confirmedChartData.datasets = [];
@@ -177,50 +189,35 @@ export default {
             } else {
                 const lastAdded = newArray.length > 0 ? newArray[newArray.length -1] : newArray[0];
 
-                const countryInfoUrl = `https://covid-api-wrapper.herokuapp.com/cases?country=${lastAdded}`;
-                const confirmedUrl = `https://covid-api-wrapper.herokuapp.com/history?country=${lastAdded}&status=Confirmed`;
-                const deathsUrl = `https://covid-api-wrapper.herokuapp.com/history?country=${lastAdded}&status=Deaths`;
+                const countryUrl = `https://covid-api-wrapper.herokuapp.com/country/${lastAdded}`;
 
-                this.axios.get(countryInfoUrl).then(res => {
+                this.axios.get(countryUrl).then(res => {
                     this.countriesInfo.push({
-                        name: res.data.name,
-                        name_es: res.data.name_es,
-                        originalName: res.data.originalName,
-                        population: res.data.population,
-                        confirmed: res.data.confirmed,
-                        deaths: res.data.deaths
+                        name: res.data.country.name,
+                        name: res.data.country.name,
+                        name_es: res.data.country.name_es,
+                        originalName: res.data.country.originalName,
+                        population: res.data.country.population,
+                        confirmed: res.data.country.confirmed,
+                        deaths: res.data.country.deaths
                     });
-                });
 
-                const color = this.getColor();
-                this.axios.get(confirmedUrl).then(res => {
-                    const sortedData = this.sort(res.data.dates);
-                    this.confirmedChartData.labels = Object.keys(sortedData);
-                    this.confirmedChartData.datasets.push({
-                        label: this.$vuetify.lang.current == 'en' ? res.data.name : res.data.name_es,
-                        borderColor: color,
-                        fill: false,
-                        data: Object.values(sortedData),
-                        pointBackgroundColor: color,
-                        _countryName: res.data.originalName
+                    this.loadChartData(res.data.confirmedData, {
+                        chart: this.confirmedChartData,
+                        label: this.$vuetify.lang.current == 'en' ? res.data.country.name : res.data.country.name_es,
+                        color: this.getColor(),
+                        countryOriginalName: res.data.country.originalName
                     });
-                }).finally(() => {
                     this.confirmedChartLoaded = true;
-                });
 
-                this.axios.get(deathsUrl).then(res => {
-                    const sortedData = this.sort(res.data.dates);
-                    this.deathsChartData.labels = Object.keys(sortedData);
-                    this.deathsChartData.datasets.push({
-                        label: this.$vuetify.lang.current == 'en' ? res.data.name : res.data.name_es,
-                        borderColor: color,
-                        fill: false,
-                        data: Object.values(sortedData),
-                        pointBackgroundColor: color,
-                        _countryName: res.data.originalName
+                    this.loadChartData(res.data.deathsData, {
+                        chart: this.deathsChartData,
+                        label: this.$vuetify.lang.current == 'en' ? res.data.country.name : res.data.country.name_es,
+                        color: this.getColor(),
+                        countryOriginalName: res.data.country.originalName
                     });
-                }).finally(() => {
                     this.deathsChartLoaded = true;
+
                     this.loading = false;
                 });
             }
