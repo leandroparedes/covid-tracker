@@ -51,7 +51,7 @@ export default {
     english: 'Inglés',
     spanish: 'Español',
     developedBy: 'Desarrollada por',
-    language: 'Lenguaje',
+    language: 'Idioma',
     options: 'Opciones',
     darkMode: 'Modo oscuro',
     lightMode: 'Modo claro',
