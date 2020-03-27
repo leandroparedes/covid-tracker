@@ -85,6 +85,9 @@ export default {
             this.filtered = this.countries.filter(country => {
                 return country.name.toLowerCase().includes(searchValue) || country.name_es.toLowerCase().includes(searchValue);
             });
+        },
+        countries: function () {
+            this.filtered = this.countries;
         }
     }
 }
