@@ -1,5 +1,5 @@
 <template>
-    <v-card>
+    <v-card v-if="loaded">
         <v-card-title>
             {{ $vuetify.lang.t(
                 '$vuetify.showingDataFrom',
@@ -11,15 +11,17 @@
             :chart-data="chartData"
         ></chart>
     </v-card>
+    <chart-history-placeholder v-else></chart-history-placeholder>
 </template>
 
 <script>
 import Chart from '@/components/Chart.vue';
+import ChartHistoryPlaceholder from '@/components/placeholders/ChartHistory.vue';
 
 export default {
     name: 'ChartHistory',
-    props: ['chartData'],
-    components: { Chart },
+    props: ['chartData', 'loaded'],
+    components: { Chart, ChartHistoryPlaceholder },
     computed: {
         lastDate: function () {
             return this.chartData.labels[0];

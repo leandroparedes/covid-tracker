@@ -1,12 +1,12 @@
 <template>
     <div>
         <country-daily-info
-            v-if="countryInfoLoaded"
+            :loaded="countryInfoLoaded"
             :country="selectedCountry"
         ></country-daily-info>
 
         <chart-history
-            v-if="chartLoaded"
+            :loaded="chartLoaded"
             :chart-data="chartData"
         ></chart-history>
 

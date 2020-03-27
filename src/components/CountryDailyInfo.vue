@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="loaded">
         <div class="display-2 mb-4">
             {{ translateCountryName(country) }}
         </div>
@@ -16,6 +16,7 @@
             </v-col>
         </v-row>
     </div>
+    <country-daily-info-placeholder v-else></country-daily-info-placeholder>
 </template>
 
 <script>
@@ -23,13 +24,16 @@ import PopulationCard from '@/components/PopulationCard.vue';
 import ConfirmedCard from '@/components/ConfirmedCard.vue';
 import DeathsCard from '@/components/DeathsCard.vue';
 
+import CountryDailyInfoPlaceholder from '@/components/placeholders/CountryDailyInfo.vue';
+
 export default {
     name: 'CountryDailyInfo',
-    props: ['country'],
+    props: ['country', 'loaded'],
     components: {
         PopulationCard,
         ConfirmedCard,
-        DeathsCard
+        DeathsCard,
+        CountryDailyInfoPlaceholder
     },
 }
 </script>
