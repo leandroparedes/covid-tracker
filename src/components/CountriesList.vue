@@ -88,6 +88,7 @@ export default {
         },
         countries: function () {
             this.filtered = this.countries;
+            this.search = '';
         }
     }
 }
