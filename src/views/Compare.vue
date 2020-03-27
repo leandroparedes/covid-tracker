@@ -202,10 +202,12 @@ export default {
                         deaths: res.data.country.deaths
                     });
 
+                    const chartColor = this.getColor();
+
                     this.loadChartData(res.data.confirmedData, {
                         chart: this.confirmedChartData,
                         label: this.$vuetify.lang.current == 'en' ? res.data.country.name : res.data.country.name_es,
-                        color: this.getColor(),
+                        color: chartColor,
                         countryOriginalName: res.data.country.originalName
                     });
                     this.confirmedChartLoaded = true;
@@ -213,7 +215,7 @@ export default {
                     this.loadChartData(res.data.deathsData, {
                         chart: this.deathsChartData,
                         label: this.$vuetify.lang.current == 'en' ? res.data.country.name : res.data.country.name_es,
-                        color: this.getColor(),
+                        color: chartColor,
                         countryOriginalName: res.data.country.originalName
                     });
                     this.deathsChartLoaded = true;
