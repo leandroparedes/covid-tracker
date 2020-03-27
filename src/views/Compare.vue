@@ -1,6 +1,9 @@
 <template>
     <div>
-        <div class="headline mb-5">{{ $vuetify.lang.t('$vuetify.compareCountries') }}</div>
+        <div class="display-1 mb-6">
+            {{ $vuetify.lang.t('$vuetify.compareCountries') }}
+        </div>
+
         <v-autocomplete
             v-model="values"
             :items="countries"

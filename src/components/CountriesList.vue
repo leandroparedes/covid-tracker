@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="mt-12 d-flex flex-column flex-sm-row justify-space-between">
-            <div class="display-2">
+            <div class="display-1">
                 {{ $vuetify.lang.t('$vuetify.countries') }}
             </div>
             <div class="mt-4 mt-sm-0">
