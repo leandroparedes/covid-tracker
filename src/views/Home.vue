@@ -4,20 +4,10 @@
 
         <country-daily-info :country="selectedCountry"></country-daily-info>
 
-        <v-card>
-            <v-card-title>
-                {{ $vuetify.lang.t(
-                    '$vuetify.showingDataFrom',
-                    $moment(lastDate).locale($vuetify.lang.current).fromNow()
-                ) }}
-            </v-card-title>
-            <v-card-text class="px-6 pt-1 pb-6">
-                <chart
-                    v-if="chartLoaded"
-                    :chart-data="chartData"
-                ></chart>
-            </v-card-text>
-        </v-card>
+        <chart-history
+            v-if="chartLoaded"
+            :chart-data="chartData"
+        ></chart-history>
 
         <div class="mt-12 d-flex flex-column flex-sm-row justify-space-between">
             <div class="display-2">
@@ -81,14 +71,14 @@
 </template>
 
 <script>
-import Chart from '@/components/Chart.vue';
 import CountryDailyInfo from '@/components/CountryDailyInfo.vue';
+import ChartHistory from '@/components/ChartHistory.vue';
 
 export default {
     name: 'home',
-    components: { 
-        Chart,
-        CountryDailyInfo
+    components: {
+        CountryDailyInfo,
+        ChartHistory
     },
     data: function () {
         return {
