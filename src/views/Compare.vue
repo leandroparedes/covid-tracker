@@ -52,47 +52,7 @@
                 </v-tabs>
             </v-card>
 
-            <v-row class="mt-3">
-                <v-col
-                    cols="12" sm="6" md="3"
-                    v-for="(country, index) in countriesInfo"
-                    :key="index"
-                >
-                    <v-hover v-slot:default="{ hover }">
-                        <v-card
-                            :elevation="hover ? 20 : 2"
-                            class="pa-1"
-                        >
-                            <v-card-title class="pb-0">
-                                <div class="text-truncate">
-                                    <router-link :to="{
-                                        path: '/',
-                                        query: { country: country.originalName }
-                                    }">
-                                        {{ $vuetify.lang.current == 'en' ? country.name : country.name_es }}
-                                    </router-link>
-                                </div>
-                            </v-card-title>
-                            <v-card-text>
-                                <v-row>
-                                    <v-col cols="6">
-                                        <div class="overline">{{ $vuetify.lang.t('$vuetify.population') }}</div>
-                                        <div class="body-2">{{ country.population | formatNumber }}</div>
-                                    </v-col>
-                                    <v-col cols="6">
-                                        <div class="overline">{{ $vuetify.lang.t('$vuetify.confirmed') }}</div>
-                                        <div class="body-2">{{ country.confirmed | formatNumber }}</div>
-                                    </v-col>
-                                    <v-col cols="6">
-                                        <div class="overline">{{ $vuetify.lang.t('$vuetify.deaths') }}</div>
-                                        <div class="body-2">{{ country.deaths | formatNumber }}</div>
-                                    </v-col>
-                                </v-row>
-                            </v-card-text>
-                        </v-card>
-                    </v-hover>
-                </v-col>
-            </v-row>
+            <countries-list :countries="countriesInfo" @change-country="handleChangeCountry"></countries-list>
         </div>
         <div v-else class="text-center pa-4">
             <div class="mb-4">
@@ -116,10 +76,11 @@
 <script>
 import Chart from '@/components/Chart.vue';
 import Vue from 'vue';
+import CountriesList from '@/components/CountriesList.vue';
 
 export default {
     name: 'compare',
-    components: { Chart },
+    components: { Chart, CountriesList },
     data: function () {
         return {
             loading: false,
@@ -173,6 +134,12 @@ export default {
             } else {
                 return country.name_es;
             }
+        },
+        handleChangeCountry: function (countryName) {
+            this.$router.push({
+                path: '/',
+                query: { country: countryName }
+            });
         }
     },
     watch: {
