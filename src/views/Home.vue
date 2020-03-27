@@ -91,7 +91,6 @@ export default {
             countries: [],
             filteredCountries: [],
             searchInput: '',
-            tableData: null,
             loading: false
         }
     },
@@ -121,7 +120,6 @@ export default {
 
             this.axios.get(confirmedUrl).then(res => {
                 this.loadConfirmedData(res.data.dates);
-                this.tableData = res.data.dates;
             });
 
             const deathsUrl = `https://covid-api-wrapper.herokuapp.com/history?country=${country}&status=Deaths`;
@@ -189,15 +187,6 @@ export default {
                 this.filteredCountries = this.countries.filter(country => country.name.toLowerCase().includes(value.toLowerCase()));
             } else {
                 this.filteredCountries = this.countries;
-            }
-        }
-    },
-    computed: {
-        lastDate: function () {
-            if (this.tableData) {
-                return Object.keys(this.tableData)[Object.keys(this.tableData).length - 1];
-            } else {
-                return Date.now();
             }
         }
     }
