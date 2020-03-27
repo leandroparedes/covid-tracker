@@ -6,7 +6,7 @@
         </v-card-title>
         <v-card-text class="display-1">
             {{ country.confirmed | formatNumber }}
-            <span class="body-1 blue-grey--text">{{ percentageDifference(country.population, country.confirmed) | percentage }}</span>
+            <span class="body-1 font-weight-bold success--text">+{{ country.newConfirmed | formatNumber }}</span>
         </v-card-text>
     </v-card>
 </template>

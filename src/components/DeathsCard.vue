@@ -6,7 +6,7 @@
         </v-card-title>
         <v-card-text class="display-1">
             {{ country.deaths | formatNumber }}
-            <span class="body-1 blue-grey--text">{{ percentageDifference(country.population, country.deaths) | percentage }}</span>
+            <span class="body-1 font-weight-bold success--text">+{{ country.newDeaths | formatNumber }}</span>
         </v-card-text>
     </v-card>
 </template>
