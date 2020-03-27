@@ -25,6 +25,17 @@ Vue.mixin({
         sort: function (o) {
             return Object.keys(o).sort().reduce((r, k) => (r[k] = o[k], r), {});
         },
+        translateCountryName: function (country) {
+            if (country) {
+                switch (this.$vuetify.lang.current) {
+                    case 'es': return country.name_es || country.name; break;
+                    case 'en': return country.name; break;
+                    default: return country.name;
+                }
+            } else {
+                return '';
+            }
+        }
     }
   })
 
