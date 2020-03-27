@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="loaded">
         <div class="mt-12 d-flex flex-column flex-sm-row justify-space-between">
             <div class="display-1">
                 {{ $vuetify.lang.t('$vuetify.countries') }}
@@ -52,12 +52,16 @@
             </v-col>
         </v-row>
     </div>
+    <countries-list-placeholder v-else></countries-list-placeholder>
 </template>
 
 <script>
+import CountriesListPlaceholder from '@/components/placeholders/CountriesList.vue';
+
 export default {
     name: 'CountriesList',
-    props: ['countries'],
+    props: ['countries', 'loaded'],
+    components: { CountriesListPlaceholder },
     data: function () {
         return {
             search: '',

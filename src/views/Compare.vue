@@ -55,7 +55,11 @@
                 </v-tabs>
             </v-card>
 
-            <countries-list :countries="countriesInfo" @change-country="handleChangeCountry"></countries-list>
+            <countries-list
+                :loaded="true"
+                :countries="countriesInfo"
+                @change-country="handleChangeCountry"
+            ></countries-list>
         </div>
         <div v-else class="text-center pa-4">
             <div class="mb-4">

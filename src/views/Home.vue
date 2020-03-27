@@ -11,7 +11,7 @@
         ></chart-history>
 
         <countries-list
-            v-if="countriesLoaded"
+            :loaded="countriesLoaded"
             :countries="countries"
             @change-country="handleChangeCountry"
         ></countries-list>
