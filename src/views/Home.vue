@@ -1,7 +1,5 @@
 <template>
     <div>
-        <div class="display-2 mb-4">{{ translateCountryName(selectedCountry) }}</div>
-
         <country-daily-info
             v-if="countryInfoLoaded"
             :country="selectedCountry"
@@ -51,64 +49,45 @@ export default {
         }
     },
     mounted () {
-        const country = this.$route.query.country || 'Global';
-        this.loadData(country);
+        this.loadData(this.$route.query.country || 'Global');
 
-        const countriesUrl = 'https://covid-api-wrapper.herokuapp.com/cases';
-
-        this.axios.get(countriesUrl).then(res => {
-            this.loadCountriesData(res.data);
+        this.axios.get('https://covid-api-wrapper.herokuapp.com/cases').then(res => {
+            res.data.map(country => this.countries.push(country));
+            this.countriesLoaded = true;
         });
     },
     methods: {
         loadData: function (country) {
+            this.countryInfoLoaded = false;
             this.chartLoaded = false;
 
-            const countryInfoUrl = `https://covid-api-wrapper.herokuapp.com/cases?country=${country}`;
-            
-            this.axios.get(countryInfoUrl).then(res => {
-                this.selectedCountry = res.data;
-            }).finally(() => this.countryInfoLoaded = true);
+            this.axios.get(`https://covid-api-wrapper.herokuapp.com/country/${country}`).then(res => {
+                this.selectedCountry = res.data.country;
 
-            const confirmedUrl = `https://covid-api-wrapper.herokuapp.com/history?country=${country}`;
+                this.loadChartData(res.data.confirmedData, {
+                    label: this.$vuetify.lang.t('$vuetify.confirmed'),
+                    color: '#2196f3',
+                });
 
-            this.axios.get(confirmedUrl).then(res => {
-                this.loadConfirmedData(res.data.dates);
-            });
-
-            const deathsUrl = `https://covid-api-wrapper.herokuapp.com/history?country=${country}&status=Deaths`;
-
-            this.axios.get(deathsUrl).then(res => {
-                this.loadDeathsData(res.data.dates);
+                this.loadChartData(res.data.deathsData, {
+                    label: this.$vuetify.lang.t('$vuetify.deaths'),
+                    color: '#ff5252',
+                });
             }).finally(() => {
+                this.countryInfoLoaded = true;
                 this.chartLoaded = true;
             });
         },
-        loadConfirmedData: function (data) {
+        loadChartData: function (data, options) {
             const sortedData = this.sort(data);
             this.chartData.labels = Object.keys(sortedData);
             this.chartData.datasets.push({
-                label: this.$vuetify.lang.t('$vuetify.confirmed'),
-                borderColor: '#2196f3',
+                label: options.label,
+                borderColor: options.color,
                 data: Object.values(sortedData),
                 fill: false,
-                pointBackgroundColor: '#2196f3'
+                pointBackgroundColor: options.color,
             });
-        },
-        loadDeathsData: function (data) {
-            const sortedData = this.sort(data);
-            this.chartData.labels = Object.keys(sortedData);
-            this.chartData.datasets.push({
-                label: this.$vuetify.lang.t('$vuetify.deaths'),
-                borderColor: '#ff5252',
-                data: Object.values(sortedData),
-                fill: false,
-                pointBackgroundColor: '#ff5252',
-            });
-        },
-        loadCountriesData: function (data) {
-            data.map(country => this.countries.push(country));
-            this.countriesLoaded = true;
         },
         handleChangeCountry: function (countryName) {
             this.chartData = { labels: [], datasets: [] };
