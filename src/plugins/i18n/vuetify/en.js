@@ -50,5 +50,9 @@ export default {
     backToHome: 'Back to home',
     english: 'English',
     spanish: 'Spanish',
-    developedBy: 'Developed by'
+    developedBy: 'Developed by',
+    language: 'Language',
+    options: 'Options',
+    darkMode: 'Dark mode',
+    lightMode: 'Light mode',
 }
