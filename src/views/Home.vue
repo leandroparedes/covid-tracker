@@ -89,8 +89,7 @@
                         :elevation="hover ? 10 : 2"
                         class="pa-1"
                         @click="changeData(country.originalName)"
-                        :class="{'active' : isSelected(country.originalName)}"
-                        :disabled="isSelected(country.originalName)"
+                        :class="{'active disabled-events' : isSelected(country.originalName)}"
                     >
                         <v-card-title>
                             <div class="text-truncate">
@@ -269,5 +268,8 @@ export default {
     .active {
         color: #2196f3 !important;
         border: 1px solid #2196f3 !important;
+    }
+    .disabled-events {
+        pointer-events: none;
     }
 </style> 
