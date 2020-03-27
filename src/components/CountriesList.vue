@@ -81,7 +81,7 @@ export default {
     },
     watch: {
         search: function (value) {
-            const searchValue = value.toLowerCase();
+            const searchValue = value ? value.toLowerCase() : '';
             this.filtered = this.countries.filter(country => {
                 return country.name.toLowerCase().includes(searchValue) || country.name_es.toLowerCase().includes(searchValue);
             });
