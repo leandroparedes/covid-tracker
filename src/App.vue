@@ -5,7 +5,7 @@
 
             <v-spacer></v-spacer>
 
-            <v-btn to="/compare" icon>
+            <v-btn to="/compare" icon active-class="no-active">
                 <v-icon>mdi-chart-line</v-icon>
             </v-btn>
 
@@ -113,3 +113,9 @@ export default {
     }
 };
 </script>
+
+<style scoped>
+    .v-btn--active.no-active::before {
+        opacity: 0 !important;
+    }
+</style>
