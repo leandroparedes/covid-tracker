@@ -2,7 +2,9 @@
     <v-card class="border-top-secondary">
         <v-card-title class="d-flex justify-space-between">
             {{ $vuetify.lang.t('$vuetify.population') }}
-            <v-icon dark class="secondary--text">mdi-human-male</v-icon>
+            <v-icon dark class="secondary--text">
+                fas fa-globe-americas
+            </v-icon>
         </v-card-title>
         <v-card-text class="display-1">
             {{ country.population | formatNumber }}

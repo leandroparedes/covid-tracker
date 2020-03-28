@@ -62,8 +62,10 @@
             ></countries-list>
         </div>
         <div v-else class="text-center pa-4">
-            <div class="mb-4">
-                <v-icon size="100" color="grey darken-1">mdi-earth</v-icon>
+            <div class="mb-6">
+                <v-icon size="100" color="grey darken-1">
+                    fas fa-globe-americas
+                </v-icon>
             </div>
             <div class="title font-weight-bold grey--text text--darken-1">
                 {{ $vuetify.lang.t('$vuetify.noSelectedCountries') }}

@@ -2,7 +2,9 @@
     <v-card class="border-top-danger">
         <v-card-title class="d-flex justify-space-between">
             {{ $vuetify.lang.t('$vuetify.deaths') }}
-            <v-icon dark class="error--text">mdi-coffin</v-icon>
+            <v-icon dark class="error--text">
+                fas fa-skull-crossbones
+            </v-icon>
         </v-card-title>
         <v-card-text class="display-1">
             {{ country.deaths | formatNumber }}
