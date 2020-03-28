@@ -8,7 +8,18 @@
         </v-card-title>
         <v-card-text class="display-1">
             {{ country.deaths | formatNumber }}
-            <span class="body-1 font-weight-bold success--text">+{{ country.newDeaths | formatNumber }}</span>
+            <span
+                v-if="country.newDeaths > 0"
+                class="title success--text"
+            >
+                +{{ country.newDeaths | formatNumber }}
+            </span>
+            <span
+                v-else
+                class="caption grey--text text--lighten-2"
+            >
+                {{ $vuetify.lang.t('$vuetify.noNewDeaths') }}
+            </span>
         </v-card-text>
     </v-card>
 </template>

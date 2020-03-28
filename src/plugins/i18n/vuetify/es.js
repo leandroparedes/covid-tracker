@@ -55,4 +55,6 @@ export default {
     options: 'Opciones',
     darkMode: 'Modo oscuro',
     lightMode: 'Modo claro',
+    noNewConfirmed: 'Sin nuevos casos',
+    noNewDeaths: 'Sin nuevas muertes'
 }
