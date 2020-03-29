@@ -60,5 +60,7 @@ export default {
     timelineTitle: 'Coronavirus outbreak timeline',
     newerFirst: 'Newer first',
     reports: 'Reports',
-    preparednessAndResponses: 'Preparedness and responses'
+    preparednessAndResponses: 'Preparedness and responses',
+    showMore: 'Show more',
+    showLess: 'Show less'
 }

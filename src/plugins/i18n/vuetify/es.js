@@ -60,5 +60,7 @@ export default {
     timelineTitle: 'Cronología del brote de coronavirus',
     newerFirst: 'Más recientes',
     reports: 'Reportes',
-    preparednessAndResponses: 'Preparación y respuestas'
+    preparednessAndResponses: 'Preparación y respuestas',
+    showMore: 'Mostrar más',
+    showLess: 'Mostrar menos'
 }
