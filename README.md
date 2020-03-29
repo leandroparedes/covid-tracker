@@ -1,20 +1,23 @@
 # Covid-T
-## Coronavirus tracker and country data comparison
+## Coronavirus timeline reports, cases tracker and country data comparison
 
-
+### Get the latest data about confirmed cases and deaths
 ![Home Screen](/images/home.png)
 
 ### Search countries
 ![Search countries](/images/countries_search.png)
 
-### Compare
+### Compare confirmed and deaths data
 ![Compare](/images/comparison.png)
+
+### Follow the Coronavirus outbreak timeline (work in progress)
+![Coronavirus outbreak timeline](/images/timeline.png)
+
+### Available in Spanish
+![Search countries spanish](/images/countries_search_es.png)
 
 ### Switch between dark and light mode
 ![Dark and light modes](/images/home_dark.png)
-
-### Also available in Spanish
-![Search countries spanish](/images/countries_search_es.png)
 
 ### Fully supported on mobile
 ![Mobile](/images/mobile.png)
