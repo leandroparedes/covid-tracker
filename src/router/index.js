@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '@/views/Home.vue';
 import Compare from '@/views/Compare.vue';
+import Timeline from '@/views/Timeline.vue';
 
 Vue.use(VueRouter);
 
@@ -15,6 +16,11 @@ const routes = [
         path: '/compare',
         name: 'Compare',
         component: Compare
+    },
+    {
+        path: '/timeline',
+        name: 'Timeline',
+        component: Timeline
     }
 ]
 

@@ -9,6 +9,10 @@
                 <v-icon>mdi-home</v-icon>
             </v-btn>
 
+            <v-btn to="/timeline" icon active-class="no-active">
+                <v-icon>mdi-timeline-text-outline</v-icon>
+            </v-btn>
+
             <v-btn to="/compare" icon active-class="no-active">
                 <v-icon>mdi-chart-line</v-icon>
             </v-btn>
