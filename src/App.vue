@@ -5,67 +5,7 @@
 
             <v-spacer></v-spacer>
 
-            <v-btn to="/" icon active-class="no-active">
-                <v-icon>mdi-home</v-icon>
-            </v-btn>
-
-            <button-timeline></button-timeline>
-
-            <v-btn to="/compare" icon active-class="no-active">
-                <v-icon>mdi-chart-line</v-icon>
-            </v-btn>
-
-            <v-menu
-                offset-y
-                :close-on-content-click="false"
-                nudge-width="160"
-            >
-                <template v-slot:activator="{ on }">
-                    <v-btn icon v-on="on">
-                        <v-icon>mdi-dots-vertical</v-icon>
-                    </v-btn>
-                </template>
-                
-                <v-card tile>
-                    <v-list>
-                        <v-subheader class="text-uppercase">{{ $vuetify.lang.t('$vuetify.options') }}</v-subheader>
-
-                        <v-list-item>
-                            <v-list-item-action>
-                                <v-switch
-                                    v-model="$vuetify.theme.dark"
-                                    hide-details
-                                    flat
-                                    :ripple="false"
-                                >
-                                </v-switch>
-                            </v-list-item-action>
-                            <v-list-item-title>
-                                {{ $vuetify.theme.dark ? $vuetify.lang.t('$vuetify.darkMode') : $vuetify.lang.t('$vuetify.lightMode') }}
-                            </v-list-item-title>
-                        </v-list-item>
-
-                        <v-list-group>
-                            <template v-slot:activator>
-                                <v-list-item-content>
-                                    <v-list-item-title>{{ $vuetify.lang.t('$vuetify.language') }}</v-list-item-title>
-                                </v-list-item-content>
-                            </template>
-                            <v-list-item
-                                v-for="(lang, i) in languages"
-                                :key="i"
-                                @click="changeLocale(lang.locale)"
-                            >
-                                <v-list-item-content>
-                                    <v-list-item-title>
-                                        {{ $vuetify.lang.t(`$vuetify.${lang.name}`) }}
-                                    </v-list-item-title>
-                                </v-list-item-content>
-                            </v-list-item>
-                        </v-list-group>
-                    </v-list>
-                </v-card>
-            </v-menu>
+            <navbar-buttons></navbar-buttons>
 
         </v-app-bar>
 
@@ -96,11 +36,11 @@
 </template>
 
 <script>
-import ButtonTimeline from '@/components/ButtonTimeline.vue';
+import NavbarButtons from '@/components/navbar/NavbarButtons.vue';
 
 export default {
     name: 'App',
-    components: { ButtonTimeline },
+    components: { NavbarButtons },
     data: function () {
         return {
             languages: [
