@@ -17,12 +17,28 @@
             ></v-switch>
         </div>
 
-        <v-timeline :dense="timelineDense"
-        >
+        <v-timeline :dense="timelineDense">
             <v-timeline-item
                 v-for="(situation, index) in situations"
                 :key="index"
             >
+                <template
+                    v-slot:opposite
+                    v-if="situation.highlights"
+                >
+                    <div class="overline">Highlights</div>
+                    <div
+                        v-for="(highlight, index) in situation.highlights"
+                        :key="index"
+                    >
+                        <div
+                            class="primary--text font-weight-light mb-2"
+                            :class="displaySize(situation.highlights.length)"
+                        >
+                            {{ highlight }}
+                        </div>
+                    </div>
+                </template>
                 <situation-card :situation="situation"></situation-card>
             </v-timeline-item>
         </v-timeline>
@@ -54,6 +70,14 @@ export default {
         this.axios.get(url).then(res => {
             this.situations = res.data;
         }).finally(() => this.loading = false);
+    },
+    methods: {
+        displaySize: function (highlightsCount) {
+            if (highlightsCount > 4) {
+                return 'headline';
+            }
+            return 'display-1'
+        }
     },
     watch: {
         reverse: function () {
