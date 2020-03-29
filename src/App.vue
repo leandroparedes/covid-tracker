@@ -9,9 +9,17 @@
                 <v-icon>mdi-home</v-icon>
             </v-btn>
 
-            <v-btn to="/timeline" icon active-class="no-active">
-                <v-icon>mdi-timeline-text-outline</v-icon>
-            </v-btn>
+            <v-badge
+                color="error"
+                overlap
+                dot
+                offset-y="15"
+                offset-x="10"
+            >
+                <v-btn icon to="/timeline" active-class="no-active">
+                    <v-icon>mdi-timeline-text-outline</v-icon>
+                </v-btn>
+            </v-badge>
 
             <v-btn to="/compare" icon active-class="no-active">
                 <v-icon>mdi-chart-line</v-icon>
