@@ -1,20 +1,10 @@
 <template>
     <div>
         <div
-            class="font-weight-black text-center text-uppercase"
+            class="font-weight-black text-center text-uppercase mb-8"
             :class="displayClass"
         >
             {{ $vuetify.lang.t('$vuetify.timelineTitle') }}
-        </div>
-
-        <div class="d-flex flex-row-reverse mb-4">
-            <v-switch
-                v-model="reverse"
-                hide-details
-                flat
-                :ripple="false"
-                :label="$vuetify.lang.t('$vuetify.newerFirst')"
-            ></v-switch>
         </div>
 
         <v-timeline :dense="timelineDense">
@@ -45,8 +35,7 @@ export default {
     data: function () {
         return {
             situations: [],
-            loading: false,
-            reverse: false
+            loading: false
         }
     },
     mounted () {
@@ -57,11 +46,6 @@ export default {
         this.axios.get(url).then(res => {
             this.situations = res.data;
         }).finally(() => this.loading = false);
-    },
-    watch: {
-        reverse: function () {
-            this.situations.reverse();
-        }
     },
     computed: {
         timelineDense: function () {
