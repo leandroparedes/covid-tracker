@@ -62,5 +62,7 @@ export default {
     reports: 'Reports',
     preparednessAndResponses: 'Preparedness and responses',
     showMore: 'Show more',
-    showLess: 'Show less'
+    showLess: 'Show less',
+    show: 'Show',
+    hide: 'Hide'
 }
