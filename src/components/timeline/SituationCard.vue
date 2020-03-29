@@ -7,7 +7,7 @@
             {{ $moment(situation.date, 'YYYY-MM-DD').locale($vuetify.lang.current).format('dddd, MMMM Do YYYY') }}
         </v-card-subtitle>
         <v-card-text>
-            <reports-card :reports="situation.reports"></reports-card>
+            <reports-list :reports="situation.reports"></reports-list>
             <preparedness-responses-card
                 :preparednessAndResponses="situation.preparedness_and_responses"
             ></preparedness-responses-card>
@@ -16,12 +16,12 @@
 </template>
 
 <script>
-import ReportsCard from '@/components/timeline/ReportsCard.vue';
+import ReportsList from '@/components/timeline/ReportsList.vue';
 import PreparednessResponsesCard from '@/components/timeline/PreparednessResponsesCard.vue';
 
 export default {
     name: 'SituationCard',
     props: ['situation'],
-    components: { ReportsCard, PreparednessResponsesCard }
+    components: { ReportsList, PreparednessResponsesCard }
 }
 </script>

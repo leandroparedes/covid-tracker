@@ -30,7 +30,7 @@
 
 <script>
 export default {
-    name: 'ReportsCard',
+    name: 'ReportsList',
     props: ['reports'],
     data: function () {
         return {
