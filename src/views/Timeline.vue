@@ -1,6 +1,9 @@
 <template>
     <div>
-        <div class="display-1 font-weight-black text-center text-uppercase">
+        <div
+            class="font-weight-black text-center text-uppercase"
+            :class="displayClass"
+        >
             Coronavirus outbreak timeline
         </div>
 
@@ -61,10 +64,21 @@ export default {
         timelineDense: function () {
             if (this.$vuetify.breakpoint.name == 'xs'
                 || this.$vuetify.breakpoint.name == 'sm'
-                || this.$vuetify.breakpoint.name == 'md') {
+                || this.$vuetify.breakpoint.name == 'md'
+            ) {
                     return true;
             }
             return false;
+        },
+        displayClass: function () {
+            if (this.$vuetify.breakpoint.name == 'md' 
+                ||this.$vuetify.breakpoint.name == 'lg' 
+                || this.$vuetify.breakpoint.name == 'xl'
+            ) {
+                return 'display-2';
+            }
+
+            return 'display-1';
         }
     }
 }
