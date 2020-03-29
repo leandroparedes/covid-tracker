@@ -22,22 +22,8 @@
                 v-for="(situation, index) in situations"
                 :key="index"
             >
-                <template
-                    v-slot:opposite
-                    v-if="situation.highlights"
-                >
-                    <div class="overline">Highlights</div>
-                    <div
-                        v-for="(highlight, index) in situation.highlights"
-                        :key="index"
-                    >
-                        <div
-                            class="primary--text font-weight-light mb-2"
-                            :class="displaySize(situation.highlights.length)"
-                        >
-                            {{ highlight }}
-                        </div>
-                    </div>
+                <template v-slot:opposite>
+                    <highlights :highlights="situation.highlights"></highlights>
                 </template>
                 <situation-card :situation="situation"></situation-card>
             </v-timeline-item>
@@ -51,10 +37,11 @@
 
 <script>
 import SituationCard from '@/components/timeline/SituationCard.vue';
+import Highlights from '@/components/timeline/Highlights.vue';
 
 export default {
     name: 'Timeline',
-    components: { SituationCard },
+    components: { SituationCard, Highlights },
     data: function () {
         return {
             situations: [],
@@ -70,14 +57,6 @@ export default {
         this.axios.get(url).then(res => {
             this.situations = res.data;
         }).finally(() => this.loading = false);
-    },
-    methods: {
-        displaySize: function (highlightsCount) {
-            if (highlightsCount > 4) {
-                return 'headline';
-            }
-            return 'display-1'
-        }
     },
     watch: {
         reverse: function () {
