@@ -4,9 +4,7 @@
 
         <timeline-button></timeline-button>
 
-        <v-btn to="/compare" icon active-class="no-active">
-            <v-icon>mdi-chart-line</v-icon>
-        </v-btn>
+        <compare-charts-button></compare-charts-button>
 
         <v-menu
             offset-y
@@ -65,12 +63,13 @@
 <script>
 import TimelineButton from './TimelineButton.vue';
 import HomeButton from './HomeButton.vue';
+import CompareChartsButton from './CompareChartsButton.vue';
 
 export default {
     name: 'NavbarButtons',
     components: {
         TimelineButton,
-        HomeButton
+        CompareChartsButton,
     }
 }
 </script>
