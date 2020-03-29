@@ -1,8 +1,6 @@
 <template>
     <span>
-        <v-btn to="/" icon active-class="no-active">
-            <v-icon>mdi-home</v-icon>
-        </v-btn>
+        <home-button></home-button>
 
         <timeline-button></timeline-button>
 
@@ -66,10 +64,14 @@
 
 <script>
 import TimelineButton from './TimelineButton.vue';
+import HomeButton from './HomeButton.vue';
 
 export default {
     name: 'NavbarButtons',
-    components: { TimelineButton },
+    components: {
+        TimelineButton,
+        HomeButton
+    }
 }
 </script>
 
