@@ -43,9 +43,3 @@ export default {
     components: { NavbarButtons }
 };
 </script>
-
-<style scoped>
-    .v-btn--active.no-active::before {
-        opacity: 0 !important;
-    }
-</style>
