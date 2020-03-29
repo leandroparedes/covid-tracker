@@ -52,6 +52,11 @@ export default {
                 this.isShowingMore = true;
             }
         }
+    },
+    watch: {
+        reports: function () {
+            this.slicedReports = this.reports.slice(0, this.showCount);
+        }
     }
 }
 </script>
