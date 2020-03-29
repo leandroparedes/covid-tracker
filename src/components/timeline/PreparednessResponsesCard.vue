@@ -1,6 +1,8 @@
 <template>
     <v-list v-if="preparednessAndResponses" dense>
-        <v-subheader>PREPAREDNESS AND RESPONSES</v-subheader>
+        <v-subheader class="text-uppercase">
+            {{ $vuetify.lang.t('$vuetify.preparednessAndResponses') }}
+        </v-subheader>
 
         <v-list-group
             v-for="(action, index) in preparednessAndResponses"

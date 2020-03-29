@@ -4,7 +4,7 @@
             class="font-weight-black text-center text-uppercase"
             :class="displayClass"
         >
-            Coronavirus outbreak timeline
+            {{ $vuetify.lang.t('$vuetify.timelineTitle') }}
         </div>
 
         <div class="d-flex flex-row-reverse mb-4">
@@ -13,7 +13,7 @@
                 hide-details
                 flat
                 :ripple="false"
-                label="Newer first"
+                :label="$vuetify.lang.t('$vuetify.newerFirst')"
             ></v-switch>
         </div>
 

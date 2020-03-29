@@ -56,5 +56,9 @@ export default {
     darkMode: 'Modo oscuro',
     lightMode: 'Modo claro',
     noNewConfirmed: 'Sin nuevos casos',
-    noNewDeaths: 'Sin nuevas muertes'
+    noNewDeaths: 'Sin nuevas muertes',
+    timelineTitle: 'Cronología del brote de coronavirus',
+    newerFirst: 'Más recientes',
+    reports: 'Reportes',
+    preparednessAndResponses: 'Preparación y respuestas'
 }
