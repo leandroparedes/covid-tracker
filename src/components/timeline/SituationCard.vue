@@ -1,9 +1,9 @@
 <template>
     <v-card class="elevation-2">
-        <v-card-title class="headline primary--text">
+        <v-card-title class="headline primary--text text-capitalize">
             {{ $moment(situation.date, 'YYYY-MM-DD').locale($vuetify.lang.current).fromNow() }}
         </v-card-title>
-        <v-card-subtitle class="pt-1 pb-0 caption">
+        <v-card-subtitle class="pt-1 pb-0 caption text-capitalize">
             {{ $moment(situation.date, 'YYYY-MM-DD').locale($vuetify.lang.current).format('dddd, MMMM Do YYYY') }}
         </v-card-subtitle>
         <v-card-text>
