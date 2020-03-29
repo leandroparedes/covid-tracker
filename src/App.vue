@@ -5,6 +5,10 @@
 
             <v-spacer></v-spacer>
 
+            <v-btn to="/" icon active-class="no-active">
+                <v-icon>mdi-home</v-icon>
+            </v-btn>
+
             <v-btn to="/compare" icon active-class="no-active">
                 <v-icon>mdi-chart-line</v-icon>
             </v-btn>
