@@ -40,26 +40,7 @@ import NavbarButtons from '@/components/navbar/NavbarButtons.vue';
 
 export default {
     name: 'App',
-    components: { NavbarButtons },
-    data: function () {
-        return {
-            languages: [
-                {
-                    locale: 'en',
-                    name: 'english'
-                },
-                {
-                    locale: 'es',
-                    name: 'spanish'
-                }
-            ]
-        }
-    },
-    methods: {
-        changeLocale: function (locale) {
-            this.$vuetify.lang.current = locale;
-        }
-    }
+    components: { NavbarButtons }
 };
 </script>
 
