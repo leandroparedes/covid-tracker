@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import ButtonTimeline from '@/components/ButtonTimeline.vue';
+import ButtonTimeline from './ButtonTimeline.vue';
 
 export default {
     name: 'NavbarButtons',
@@ -73,6 +73,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+    ::v-deep .v-btn--active.no-active::before {
+        opacity: 0 !important;
+    }
 </style>
