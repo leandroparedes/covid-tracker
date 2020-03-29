@@ -9,17 +9,7 @@
                 <v-icon>mdi-home</v-icon>
             </v-btn>
 
-            <v-badge
-                color="error"
-                overlap
-                dot
-                offset-y="15"
-                offset-x="10"
-            >
-                <v-btn icon to="/timeline" active-class="no-active">
-                    <v-icon>mdi-timeline-text-outline</v-icon>
-                </v-btn>
-            </v-badge>
+            <button-timeline></button-timeline>
 
             <v-btn to="/compare" icon active-class="no-active">
                 <v-icon>mdi-chart-line</v-icon>
@@ -106,8 +96,11 @@
 </template>
 
 <script>
+import ButtonTimeline from '@/components/ButtonTimeline.vue';
+
 export default {
     name: 'App',
+    components: { ButtonTimeline },
     data: function () {
         return {
             languages: [
