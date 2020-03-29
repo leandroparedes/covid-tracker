@@ -4,7 +4,7 @@
             <v-icon>mdi-home</v-icon>
         </v-btn>
 
-        <button-timeline></button-timeline>
+        <timeline-button></timeline-button>
 
         <v-btn to="/compare" icon active-class="no-active">
             <v-icon>mdi-chart-line</v-icon>
@@ -65,11 +65,11 @@
 </template>
 
 <script>
-import ButtonTimeline from './ButtonTimeline.vue';
+import TimelineButton from './TimelineButton.vue';
 
 export default {
     name: 'NavbarButtons',
-    components: { ButtonTimeline },
+    components: { TimelineButton },
 }
 </script>
 

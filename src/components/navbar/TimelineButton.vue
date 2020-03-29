@@ -15,7 +15,7 @@
 
 <script>
 export default {
-    name: 'ButtonTimeline',
+    name: 'TimelineButton',
     data: function () {
         return {
              buttonTimelineClicked: false
