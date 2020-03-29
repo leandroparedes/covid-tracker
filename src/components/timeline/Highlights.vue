@@ -1,5 +1,5 @@
 <template>
-    <div v-if="highlights.length">
+    <div v-if="highlights && highlights.length">
         <div class="overline">Highlights</div>
         <div
             v-for="(highlight, index) in highlights"
