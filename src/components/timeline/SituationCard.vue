@@ -8,20 +8,20 @@
         </v-card-subtitle>
         <v-card-text>
             <reports-list :reports="situation.reports"></reports-list>
-            <preparedness-responses-card
+            <preparedness-responses-list
                 :preparednessAndResponses="situation.preparedness_and_responses"
-            ></preparedness-responses-card>
+            ></preparedness-responses-list>
         </v-card-text>
     </v-card>
 </template>
 
 <script>
 import ReportsList from '@/components/timeline/ReportsList.vue';
-import PreparednessResponsesCard from '@/components/timeline/PreparednessResponsesCard.vue';
+import PreparednessResponsesList from '@/components/timeline/PreparednessResponsesList.vue';
 
 export default {
     name: 'SituationCard',
     props: ['situation'],
-    components: { ReportsList, PreparednessResponsesCard }
+    components: { ReportsList, PreparednessResponsesList }
 }
 </script>

@@ -31,7 +31,7 @@
 
 <script>
 export default {
-    name: 'PreparednessAndResponsesCard',
+    name: 'PreparednessAndResponsesList',
     props: ['preparednessAndResponses'],
     data: function () {
         return {
