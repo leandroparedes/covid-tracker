@@ -12,6 +12,8 @@
         <v-content>
             <v-container class="my-8 px-md-12">
                 <router-view :key="$route.fullPath"></router-view>
+
+                <back-to-top-button></back-to-top-button>
             </v-container>
         </v-content>
 
@@ -37,9 +39,10 @@
 
 <script>
 import NavbarButtons from '@/components/navbar/NavbarButtons.vue';
+import BackToTopButton from '@/components/BackToTopButton.vue';
 
 export default {
     name: 'App',
-    components: { NavbarButtons }
+    components: { NavbarButtons, BackToTopButton }
 };
 </script>
