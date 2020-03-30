@@ -9,7 +9,7 @@
 
         <v-timeline :dense="timelineDense">
             <v-timeline-item
-                v-for="(situation, index) in situations"
+                v-for="(situation, index) in situations.data"
                 :key="index"
             >
                 <template v-slot:opposite>
@@ -18,6 +18,20 @@
                 <situation-card :situation="situation"></situation-card>
             </v-timeline-item>
         </v-timeline>
+
+        <div
+            v-if="situations.links && situations.links.next"
+            class="text-center"
+        >
+            <v-btn
+                @click="loadMore"
+                :loading="loadingMore"
+                text
+                x-large
+            >
+                {{ $vuetify.lang.t('$vuetify.loadMore') }}
+            </v-btn>
+        </div>
 
         <v-overlay :value="loading">
             <v-progress-circular indeterminate size="64"></v-progress-circular>
@@ -35,17 +49,30 @@ export default {
     data: function () {
         return {
             situations: [],
-            loading: false
+            loading: false,
+            loadingMore: false
         }
     },
     mounted () {
         this.loading = true;
 
-        const url = "https://covid-situations.herokuapp.com/v1/situations";
+        const url = 'https://covid-situations.herokuapp.com/v1/situations?page=1&perPage=10';
 
         this.axios.get(url).then(res => {
             this.situations = res.data;
         }).finally(() => this.loading = false);
+    },
+    methods: {
+        loadMore: function () {
+            this.loadingMore = true;
+
+            this.axios.get(this.situations.links.next).then(res => {
+                res.data.data.map(situation => {
+                    this.situations.data.push(situation);
+                });
+                this.situations.links.next = res.data.links.next;
+            }).finally(() => this.loadingMore = false);
+        }
     },
     computed: {
         timelineDense: function () {

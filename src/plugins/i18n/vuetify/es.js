@@ -64,5 +64,6 @@ export default {
     showMore: 'Mostrar más',
     showLess: 'Mostrar menos',
     show: 'Mostrar',
-    hide: 'Ocultar'
+    hide: 'Ocultar',
+    loadMore: 'Cargar más'
 }
