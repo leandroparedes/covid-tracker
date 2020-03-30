@@ -47,6 +47,8 @@ export default {
             if (this.slicedReports.length === this.reports.length) {
                 this.slicedReports = this.reports.slice(0, this.showCount);
                 this.isShowingMore = false;
+
+                this.$emit('scroll-to-top');
             } else {
                 this.slicedReports = this.reports;
                 this.isShowingMore = true;

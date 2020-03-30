@@ -1,5 +1,5 @@
 <template>
-    <v-card class="elevation-2">
+    <v-card class="elevation-2" :id="'id-' + id">
         <v-card-title class="headline primary--text text-capitalize">
             {{ $moment(situation.date, 'YYYY-MM-DD').locale($vuetify.lang.current).format('dddd, MMMM Do YYYY') }}
         </v-card-title>
@@ -7,7 +7,7 @@
             {{ $moment(situation.date, 'YYYY-MM-DD').locale($vuetify.lang.current).fromNow() }}
         </v-card-subtitle>
         <v-card-text>
-            <reports-list :reports="situation.reports"></reports-list>
+            <reports-list :reports="situation.reports" @scroll-to-top="handlerScrollToTop"></reports-list>
             <preparedness-responses-list
                 :preparednessAndResponses="situation.preparedness_and_responses"
             ></preparedness-responses-list>
@@ -22,6 +22,18 @@ import PreparednessResponsesList from '@/components/timeline/PreparednessRespons
 export default {
     name: 'SituationCard',
     props: ['situation'],
-    components: { ReportsList, PreparednessResponsesList }
+    components: { ReportsList, PreparednessResponsesList },
+    data: function () {
+        return {
+            id: Math.random()
+        }
+    },
+    methods: {
+        handlerScrollToTop: function () {
+            const element = document.getElementById('id-' + this.id);
+            element.scrollIntoView();
+            window.scrollBy(0, -100);
+        }
+    }
 }
 </script>
