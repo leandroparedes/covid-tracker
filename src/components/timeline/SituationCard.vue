@@ -1,10 +1,10 @@
 <template>
     <v-card class="elevation-2">
         <v-card-title class="headline primary--text text-capitalize">
-            {{ $moment(situation.date, 'YYYY-MM-DD').locale($vuetify.lang.current).fromNow() }}
+            {{ $moment(situation.date, 'YYYY-MM-DD').locale($vuetify.lang.current).format('dddd, MMMM Do YYYY') }}
         </v-card-title>
         <v-card-subtitle class="pt-1 pb-0 caption text-capitalize">
-            {{ $moment(situation.date, 'YYYY-MM-DD').locale($vuetify.lang.current).format('dddd, MMMM Do YYYY') }}
+            {{ $moment(situation.date, 'YYYY-MM-DD').locale($vuetify.lang.current).fromNow() }}
         </v-card-subtitle>
         <v-card-text>
             <reports-list :reports="situation.reports"></reports-list>
