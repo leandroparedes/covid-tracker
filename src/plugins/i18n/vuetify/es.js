@@ -65,5 +65,8 @@ export default {
     showLess: 'Mostrar menos',
     show: 'Mostrar',
     hide: 'Ocultar',
-    loadMore: 'Cargar más'
+    loadMore: 'Cargar más',
+    relatedLinks: 'Link relacionados',
+    noPreparednessOrResponses: 'No hay preparaciones ni respuestas',
+    noRelatedLinks: 'No hay links relacionados'
 }
