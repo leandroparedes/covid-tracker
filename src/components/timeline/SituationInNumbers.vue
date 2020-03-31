@@ -16,10 +16,33 @@
             <tbody>
                 <tr v-for="(item, index) in situationInNumbers" :key="index">
                     <td>{{ item.location }}</td>
-                    <td>{{ item.numbers.confirmed || 0 }}</td>
-                    <td>{{ item.numbers.suspected || 0 }}</td>
-                    <td>{{ item.numbers.severe || 0 }}</td>
-                    <td>{{ item.numbers.deaths || 0 }}</td>
+                    <td v-if="item.numbers.confirmed" class="text-center">
+                        {{ item.numbers.confirmed | formatNumber }}
+                    </td>
+                    <td v-else class="text-center">
+                        <v-icon small>far fa-question-circle</v-icon>
+                    </td>
+
+                    <td v-if="item.numbers.suspected" class="text-center">
+                        {{ item.numbers.suspected | formatNumber }}
+                    </td>
+                    <td v-else class="text-center" :title="$vuetify.lang.t('$vuetify.unreported')">
+                        <v-icon small color="grey">far fa-question-circle</v-icon>
+                    </td>
+
+                    <td v-if="item.numbers.severe" class="text-center">
+                        {{ item.numbers.severe | formatNumber }}
+                    </td>
+                    <td v-else class="text-center" :title="$vuetify.lang.t('$vuetify.unreported')">
+                        <v-icon small color="grey">far fa-question-circle</v-icon>
+                    </td>
+
+                    <td v-if="item.numbers.deaths" class="text-center">
+                        {{ item.numbers.deaths | formatNumber }}
+                    </td>
+                    <td v-else class="text-center" :title="$vuetify.lang.t('$vuetify.unreported')">
+                        <v-icon small color="grey">far fa-question-circle</v-icon>
+                    </td>
                 </tr>
             </tbody>
       </template>

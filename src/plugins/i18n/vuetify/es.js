@@ -76,5 +76,6 @@ export default {
     noSituationInNumbers: 'No hay datos disponibles en este reporte',
     location: 'Locación',
     suspected: 'Sospechas',
-    severe: 'Graves'
+    severe: 'Graves',
+    unreported: 'Sin reportar'
 }
