@@ -4,6 +4,7 @@ import router from './router';
 import vuetify from './plugins/vuetify';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
+import store from './store';
 
 Vue.use(VueAxios, axios);
 
@@ -48,5 +49,6 @@ Vue.use(require('vue-moment'), {
 new Vue({
     router,
     vuetify,
+    store,
     render: function (h) { return h(App) }
 }).$mount('#app');
