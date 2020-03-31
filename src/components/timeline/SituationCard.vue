@@ -1,5 +1,9 @@
 <template>
-    <v-card class="elevation-2" :id="'id-' + id">
+    <v-card
+        :id="id"
+        class="elevation-2 border"
+        :class="{'border-active': bookmarked}"
+    >
         <v-card-title
             class="headline primary--text text-capitalize d-flex justify-space-between"
         >
@@ -15,6 +19,8 @@
                 >
                     <v-icon size="16" color="primary">fas fa-external-link-alt</v-icon>
                 </a>
+
+                <bookmark-button :situation="situation"></bookmark-button>
             </div>
         </v-card-title>
         <v-card-subtitle class="pt-1 pb-0 caption text-capitalize">
@@ -59,6 +65,7 @@
 import ReportsList from '@/components/timeline/ReportsList.vue';
 import PreparednessResponsesList from '@/components/timeline/PreparednessResponsesList.vue';
 import RelatedLinks from '@/components/timeline/RelatedLinks.vue';
+import BookmarkButton from '@/components/timeline/BookmarkButton.vue';
 
 export default {
     name: 'SituationCard',
@@ -66,19 +73,40 @@ export default {
     components: {
         ReportsList,
         PreparednessResponsesList,
-        RelatedLinks
+        RelatedLinks,
+        BookmarkButton
     },
     data: function () {
         return {
-            id: Math.random()
+            id: null
+        }
+    },
+    mounted () {
+        if (this.situation) {
+            this.id = this.situation.date.split('/').join('');
         }
     },
     methods: {
         handlerScrollToTop: function () {
-            const element = document.getElementById('id-' + this.id);
+            const element = document.getElementById(this.id);
             element.scrollIntoView();
             window.scrollBy(0, -100);
+        }
+    },
+    computed: {
+        bookmarked: function () {
+            return this.$store.state.bookmark == this.situation.date.split('/').join('');
         }
     }
 }
 </script>
+
+<style scoped>
+    .border {
+        border: 1px solid transparent;
+        transition: all 0.3s;
+    }
+    .border-active {
+        border: 1px solid #2196f3;
+    }
+</style>

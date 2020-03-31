@@ -69,5 +69,7 @@ export default {
     relatedLinks: 'Link relacionados',
     noPreparednessOrResponses: 'No hay preparaciones ni respuestas',
     noRelatedLinks: 'No hay links relacionados',
-    goToOriginalReport: 'Ir al reporte original'
+    goToOriginalReport: 'Ir al reporte original',
+    goToBookmark: 'Ir al marcador',
+    saveBookmark: 'Guardar marcador'
 }

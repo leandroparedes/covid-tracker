@@ -7,6 +7,18 @@
             {{ $vuetify.lang.t('$vuetify.timelineTitle') }}
         </div>
 
+        <div class="d-flex flex-row-reverse">
+            <v-btn
+                color="primary"
+                text
+                @click="goToBookmarked"
+                v-if="$store.state.bookmark"
+                :loading="lookingForBookmark"
+            >
+               {{ $vuetify.lang.t('$vuetify.goToBookmark') }}
+            </v-btn>
+        </div>
+
         <v-timeline :dense="timelineDense">
             <v-timeline-item
                 v-for="(situation, index) in situations.data"
@@ -50,7 +62,8 @@ export default {
         return {
             situations: [],
             loading: false,
-            loadingMore: false
+            loadingMore: false,
+            lookingForBookmark: false
         }
     },
     mounted () {
@@ -63,15 +76,39 @@ export default {
         }).finally(() => this.loading = false);
     },
     methods: {
-        loadMore: function () {
+        loadMore: async function () {
             this.loadingMore = true;
 
-            this.axios.get(this.situations.links.next).then(res => {
+            return this.axios.get(this.situations.links.next).then(res => {
                 res.data.data.map(situation => {
                     this.situations.data.push(situation);
                 });
                 this.situations.links.next = res.data.links.next;
+                return true;
             }).finally(() => this.loadingMore = false);
+        },
+        goToBookmarked: async function () {
+            this.lookingForBookmark = true;
+            const bookmarkID = localStorage.getItem('bookmarkID');
+
+            if (! bookmarkID) {
+                this.lookingForBookmark = false;
+                return;
+            }
+
+            let element = document.getElementById(bookmarkID);
+            while (! element) {
+                const loaded = await this.loadMore();
+                if (loaded) {
+                    element = document.getElementById(bookmarkID);
+                }
+            }
+
+            // without this, scrollIntoView doesn't center the element on the screen
+            setTimeout(() => {
+                element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                this.lookingForBookmark = false;
+            }, 1000);
         }
     },
     computed: {
