@@ -68,5 +68,6 @@ export default {
     loadMore: 'Load more',
     relatedLinks: 'Related links',
     noPreparednessOrResponses: 'There are not preparedness or responses actions',
-    noRelatedLinks: 'There are no related links'
+    noRelatedLinks: 'There are no related links',
+    goToOriginalReport: 'Go to the original report'
 }
