@@ -22,9 +22,15 @@
         </v-card-subtitle>
         <div class="pa-3 subtitle-1 font-weight-light">
             <v-tabs grow class="mt-4" show-arrows centered>
-                <v-tab><v-icon>far fa-file-alt</v-icon></v-tab>
-                <v-tab><v-icon>fas fa-shield-virus</v-icon></v-tab>
-                <v-tab><v-icon>fas fa-link</v-icon></v-tab>
+                <v-tab :title="$vuetify.lang.t('$vuetify.reports')">
+                    <v-icon>far fa-file-alt</v-icon>
+                </v-tab>
+                <v-tab :title="$vuetify.lang.t('$vuetify.preparednessAndResponses')">
+                    <v-icon>fas fa-shield-virus</v-icon>
+                </v-tab>
+                <v-tab :title="$vuetify.lang.t('$vuetify.relatedLinks')">
+                    <v-icon>fas fa-link</v-icon>
+                </v-tab>
 
                 <v-tab-item>
                     <reports-list
