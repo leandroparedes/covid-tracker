@@ -1,15 +1,12 @@
 <template>
     <v-list v-if="preparednessAndResponses" dense>
-        <v-subheader class="text-uppercase d-flex justify-space-between">
+        <v-subheader class="text-uppercase">
             <div>
                 {{ $vuetify.lang.t('$vuetify.preparednessAndResponses') }}
             </div>
-            <v-btn text small color="primary" @click="showList = !showList">
-                {{ showList ? $vuetify.lang.t('$vuetify.hide') : $vuetify.lang.t('$vuetify.show') }}
-            </v-btn>
         </v-subheader>
 
-        <span v-if="showList">
+        <span>
             <v-list-group
                 v-for="(action, index) in preparednessAndResponses"
                 :key="index"
@@ -27,17 +24,17 @@
             </v-list-group>
         </span>
     </v-list>
+    <div v-else class="text-center">
+        <div class="subtitle-1 pt-5">
+            {{ $vuetify.lang.t('$vuetify.noPreparednessOrResponses') }}
+        </div>
+    </div>
 </template>
 
 <script>
 export default {
     name: 'PreparednessAndResponsesList',
-    props: ['preparednessAndResponses'],
-    data: function () {
-        return {
-            showList: false
-        }
-    }
+    props: ['preparednessAndResponses']
 }
 </script>
 
