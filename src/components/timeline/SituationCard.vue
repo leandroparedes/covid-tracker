@@ -103,7 +103,7 @@ export default {
 
 <style scoped>
     .border {
-        border: 1px solid transparent;
+        border: 1px solid inherit;
         transition: all 0.3s;
     }
     .border-active {
