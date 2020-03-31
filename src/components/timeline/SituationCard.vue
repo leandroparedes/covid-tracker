@@ -1,13 +1,27 @@
 <template>
     <v-card class="elevation-2" :id="'id-' + id">
-        <v-card-title class="headline primary--text text-capitalize">
-            {{ $moment(situation.date, 'YYYY-MM-DD').locale($vuetify.lang.current).format('dddd, MMMM Do YYYY') }}
+        <v-card-title
+            class="headline primary--text text-capitalize d-flex justify-space-between"
+        >
+            <div>
+                {{ $moment(situation.date, 'YYYY-MM-DD').locale($vuetify.lang.current).format('dddd, MMMM Do YYYY') }}
+            </div>
+            <div>
+                <a
+                    v-if="situation.original_report_link"
+                    :href="situation.original_report_link"
+                    target="_blank"
+                    :title="$vuetify.lang.t('$vuetify.goToOriginalReport')"
+                >
+                    <v-icon size="16" color="primary">fas fa-external-link-alt</v-icon>
+                </a>
+            </div>
         </v-card-title>
         <v-card-subtitle class="pt-1 pb-0 caption text-capitalize">
             {{ $moment(situation.date, 'YYYY-MM-DD').locale($vuetify.lang.current).fromNow() }}
         </v-card-subtitle>
-        <v-card-text>
-            <v-tabs grow class="mt-4">
+        <div class="pa-3 subtitle-1 font-weight-light">
+            <v-tabs grow class="mt-4" show-arrows centered>
                 <v-tab><v-icon>far fa-file-alt</v-icon></v-tab>
                 <v-tab><v-icon>fas fa-shield-virus</v-icon></v-tab>
                 <v-tab><v-icon>fas fa-link</v-icon></v-tab>
@@ -24,14 +38,14 @@
                         :preparednessAndResponses="situation.preparedness_and_responses"
                     ></preparedness-responses-list>
                 </v-tab-item>
-                
+
                 <v-tab-item>
                     <related-links
                         :related-links="situation.related_links"
                     ></related-links>
                 </v-tab-item>
             </v-tabs>
-        </v-card-text>
+        </div>
     </v-card>
 </template>
 
