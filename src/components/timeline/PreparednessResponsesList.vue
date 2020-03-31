@@ -25,7 +25,7 @@
         </span>
     </v-list>
     <div v-else class="text-center">
-        <div class="subtitle-1 pt-5">
+        <div class="subtitle-1 font-weight-light pt-8 pb-5">
             {{ $vuetify.lang.t('$vuetify.noPreparednessOrResponses') }}
         </div>
     </div>
