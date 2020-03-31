@@ -1,6 +1,6 @@
 <template>
     <v-list v-if="relatedLinks" dense>
-            <v-subheader class="text-uppercase">
+        <v-subheader class="text-uppercase">
             {{ $vuetify.lang.t('$vuetify.relatedLinks') }}
         </v-subheader>
 
