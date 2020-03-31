@@ -71,5 +71,10 @@ export default {
     noRelatedLinks: 'There are no related links',
     goToOriginalReport: 'Go to the original report',
     goToBookmark: 'Go to bookmark',
-    saveBookmark: 'Save bookmark'
+    saveBookmark: 'Save bookmark',
+    situationInNumbers: 'Situation in numbers',
+    noSituationInNumbers: 'No data available in this report',
+    location: 'Location',
+    suspected: 'Suspected',
+    severe: 'Severe'
 }

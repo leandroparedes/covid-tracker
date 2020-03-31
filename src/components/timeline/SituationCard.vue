@@ -37,6 +37,9 @@
                 <v-tab :title="$vuetify.lang.t('$vuetify.relatedLinks')">
                     <v-icon>fas fa-link</v-icon>
                 </v-tab>
+                <v-tab :title="$vuetify.lang.t('$vuetify.situationInNumbers')">
+                    <v-icon>fas fa-table</v-icon>
+                </v-tab>
 
                 <v-tab-item>
                     <reports-list
@@ -56,6 +59,12 @@
                         :related-links="situation.related_links"
                     ></related-links>
                 </v-tab-item>
+
+                <v-tab-item>
+                    <situation-in-numbers
+                        :situation-in-numbers="situation.situation_in_numbers"
+                    ></situation-in-numbers>
+                </v-tab-item>
             </v-tabs>
         </div>
     </v-card>
@@ -66,6 +75,7 @@ import ReportsList from '@/components/timeline/ReportsList.vue';
 import PreparednessResponsesList from '@/components/timeline/PreparednessResponsesList.vue';
 import RelatedLinks from '@/components/timeline/RelatedLinks.vue';
 import BookmarkButton from '@/components/timeline/BookmarkButton.vue';
+import SituationInNumbers from './SituationInNumbers';
 
 export default {
     name: 'SituationCard',
@@ -74,7 +84,8 @@ export default {
         ReportsList,
         PreparednessResponsesList,
         RelatedLinks,
-        BookmarkButton
+        BookmarkButton,
+        SituationInNumbers
     },
     data: function () {
         return {

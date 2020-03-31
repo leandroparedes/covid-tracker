@@ -71,5 +71,10 @@ export default {
     noRelatedLinks: 'No hay links relacionados',
     goToOriginalReport: 'Ir al reporte original',
     goToBookmark: 'Ir al marcador',
-    saveBookmark: 'Guardar marcador'
+    saveBookmark: 'Guardar marcador',
+    situationInNumbers: 'Situación en números',
+    noSituationInNumbers: 'No hay datos disponibles en este reporte',
+    location: 'Locación',
+    suspected: 'Sospechas',
+    severe: 'Graves'
 }
