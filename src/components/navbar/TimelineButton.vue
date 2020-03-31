@@ -5,9 +5,9 @@
         dot
         offset-y="15"
         offset-x="10"
-        :value="! buttonTimelineClicked"
+        :value="bookmarkExists"
     >
-        <v-btn icon to="/timeline" active-class="no-active" @click="buttonTimelineClicked = true">
+        <v-btn icon to="/timeline" active-class="no-active">
             <v-icon>mdi-timeline-text-outline</v-icon>
         </v-btn>
     </v-badge>
@@ -16,9 +16,9 @@
 <script>
 export default {
     name: 'TimelineButton',
-    data: function () {
-        return {
-             buttonTimelineClicked: false
+    computed: {
+        bookmarkExists: function () {
+            return this.$store.state.bookmark != null;
         }
     }
 }
