@@ -21,7 +21,7 @@
             {{ $moment(situation.date, 'YYYY-MM-DD').locale($vuetify.lang.current).fromNow() }}
         </v-card-subtitle>
         <div class="pa-3 subtitle-1 font-weight-light">
-            <v-tabs grow class="mt-4" show-arrows centered>
+            <v-tabs grow show-arrows centered>
                 <v-tab :title="$vuetify.lang.t('$vuetify.reports')">
                     <v-icon>far fa-file-alt</v-icon>
                 </v-tab>
