@@ -77,5 +77,6 @@ export default {
     location: 'Locación',
     suspected: 'Sospechas',
     severe: 'Graves',
-    unreported: 'Sin reportar'
+    unreported: 'Sin reportar',
+    goToDate: 'Ir a la fecha'
 }

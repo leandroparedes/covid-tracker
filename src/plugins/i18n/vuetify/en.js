@@ -77,5 +77,6 @@ export default {
     location: 'Location',
     suspected: 'Suspected',
     severe: 'Severe',
-    unreported: 'Unreported'
+    unreported: 'Unreported',
+    goToDate: 'Go to date'
 }

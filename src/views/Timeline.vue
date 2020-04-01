@@ -7,17 +7,25 @@
             {{ $vuetify.lang.t('$vuetify.timelineTitle') }}
         </div>
 
-        <div class="d-flex flex-row-reverse">
-            <v-btn
-                color="primary"
-                text
-                @click="goToBookmarked"
-                v-if="$store.state.bookmark"
-                :loading="lookingForBookmark"
+        <v-row>
+            <v-col
+                sm="6" offset-sm="6"
+                lg="4" offset-lg="8"
+                class="d-flex"
             >
-               {{ $vuetify.lang.t('$vuetify.goToBookmark') }}
-            </v-btn>
-        </div>
+                <datepicker @go-to-date="handleGoToDate"></datepicker>
+                
+                <v-btn
+                    fab
+                    @click="goToBookmarked"
+                    v-if="$store.state.bookmark"
+                    class="ml-4"
+                    :title="$vuetify.lang.t('$vuetify.goToBookmark')"
+                >
+                    <v-icon color="primary">fas fa-bookmark</v-icon>
+                </v-btn>
+            </v-col>
+        </v-row>
 
         <v-timeline :dense="timelineDense">
             <v-timeline-item
@@ -54,16 +62,16 @@
 <script>
 import SituationCard from '@/components/timeline/SituationCard.vue';
 import Highlights from '@/components/timeline/Highlights.vue';
+import Datepicker from '@/components/timeline/Datepicker.vue';
 
 export default {
     name: 'Timeline',
-    components: { SituationCard, Highlights },
+    components: { SituationCard, Highlights, Datepicker },
     data: function () {
         return {
             situations: [],
             loading: false,
-            loadingMore: false,
-            lookingForBookmark: false
+            loadingMore: false
         }
     },
     mounted () {
@@ -87,28 +95,33 @@ export default {
                 return true;
             }).finally(() => this.loadingMore = false);
         },
-        goToBookmarked: async function () {
-            this.lookingForBookmark = true;
+        goToBookmarked: function () {
             const bookmarkID = localStorage.getItem('bookmarkID');
 
             if (! bookmarkID) {
-                this.lookingForBookmark = false;
+                this.loading = false;
                 return;
             }
 
-            let element = document.getElementById(bookmarkID);
+            this.scrollTo(bookmarkID);
+        },
+        scrollTo: async function (id) {
+            this.loading = true;
+
+            let element = document.getElementById(id);
             while (! element) {
                 const loaded = await this.loadMore();
-                if (loaded) {
-                    element = document.getElementById(bookmarkID);
-                }
+                if (loaded) element = document.getElementById(id);
             }
 
             // without this, scrollIntoView doesn't center the element on the screen
             setTimeout(() => {
                 element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                this.lookingForBookmark = false;
+                this.loading = false;
             }, 1000);
+        },
+        handleGoToDate: function (date) {
+            this.scrollTo(date.split('-').join(''));
         }
     },
     computed: {
