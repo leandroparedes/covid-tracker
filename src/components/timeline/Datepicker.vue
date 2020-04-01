@@ -20,6 +20,7 @@
             ></v-text-field>
         </template>
             <v-date-picker
+                color="primary"
                 v-model="date"
                 type="date"
                 no-title
