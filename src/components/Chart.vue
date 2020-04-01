@@ -1,6 +1,9 @@
 <template>
-    <div>
-        <canvas ref="canvas" :style="chartStyle"></canvas>
+    <div
+        style="position: relative; width:100%"
+        :style="{'height': chartHeight}"
+    >
+        <canvas ref="canvas"></canvas>
     </div>
 </template>
 
@@ -25,6 +28,7 @@ export default {
 
         this.options = {
             responsive: true,
+            maintainAspectRatio: false,
             legend: {
                 onClick: (e, legendItem) => {
                     var index = legendItem.datasetIndex;
@@ -110,16 +114,14 @@ export default {
             this.$data._chart.update();
         },
         chartType: function () {
-            this.options.scales.yAxes[0].type = this.chartType;
             this.$data._chart.destroy();
+            this.options.scales.yAxes[0].type = this.chartType;
             this.renderChart(this.chartData, this.options);
         }
     },
     computed: {
-        chartStyle: function () {
-            const height = this.windowWidth >= 600 ? '450px' : '500px';
-            const width = this.windowWidth >= 600 ? '100%' : '500px';
-            return { height, width };
+        chartHeight: function () {
+            return this.windowWidth >= 600 ? '60vh' : '50vh';
         },
         ...mapState({
             chartType: state => state.chartType
