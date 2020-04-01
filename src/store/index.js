@@ -7,11 +7,15 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     plugins: [createPersistedState()],
     state: {
-        bookmark: null
+        bookmark: null,
+        chartType: 'linear'
     },
     mutations: {
         bookmark: function (state, bookmarkID) {
             state.bookmark = bookmarkID;
+        },
+        set_chart_type: function (state, chartType){
+            state.chartType = chartType;
         }
     },
     actions: {

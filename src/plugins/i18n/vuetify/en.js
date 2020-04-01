@@ -78,5 +78,8 @@ export default {
     suspected: 'Suspected',
     severe: 'Severe',
     unreported: 'Unreported',
-    goToDate: 'Go to date'
+    goToDate: 'Go to date',
+    chart: 'Chart type',
+    linear: 'Exponential',
+    logarithmic: 'Logarithmic'
 }

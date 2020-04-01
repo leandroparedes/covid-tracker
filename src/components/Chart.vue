@@ -8,6 +8,7 @@
 import { Line, mixins } from 'vue-chartjs';
 const { reactiveProp } = mixins;
 import Chart from 'chart.js';
+import { mapState } from 'vuex';
 
 export default {
     extends: Line,
@@ -15,17 +16,14 @@ export default {
     data: function () {
         return {
             windowWidth: window.innerWidth,
+            options: {},
         }
     },
     mounted () {
         Chart.defaults.global.elements.point.radius = this.windowWidth >= 600 ? 3 : 1;
         Chart.defaults.global.elements.line.borderWidth = this.windowWidth >= 600 ? 3 : 2;
 
-         window.onresize = () => {
-            this.windowWidth = window.innerWidth;
-        }
-
-        this.renderChart(this.chartData, {
+        this.options = {
             responsive: true,
             legend: {
                 onClick: (e, legendItem) => {
@@ -72,6 +70,7 @@ export default {
             },
             scales: {
                 yAxes: [{
+                    type: this.chartType,
                     ticks: {
                         callback: function (n, index, values) {
                             if (n < 1e3) return n;
@@ -79,8 +78,9 @@ export default {
                             if (n >= 1e6 && n < 1e9) return +(n / 1e6).toFixed(1) + "M";
                             if (n >= 1e9 && n < 1e12) return +(n / 1e9).toFixed(1) + "B";
                             if (n >= 1e12) return +(n / 1e12).toFixed(1) + "T";
-                        }
-                    }
+                        },
+                        maxTicksLimit: 10
+                    },
                 }],
                 xAxes: [{
                     type: 'time',
@@ -97,11 +97,22 @@ export default {
                     hoverBorderWidth: window.innerWidth >= 600 ? 4 : 2,
                 }
             }
-        });
+        };
+
+         window.onresize = () => {
+            this.windowWidth = window.innerWidth;
+        }
+
+        this.renderChart(this.chartData, this.options);
     },
     watch: {
         'chartData.datasets': function () {
             this.$data._chart.update();
+        },
+        chartType: function () {
+            this.options.scales.yAxes[0].type = this.chartType;
+            this.$data._chart.destroy();
+            this.renderChart(this.chartData, this.options);
         }
     },
     computed: {
@@ -109,7 +120,10 @@ export default {
             const height = this.windowWidth >= 600 ? '450px' : '500px';
             const width = this.windowWidth >= 600 ? '100%' : '500px';
             return { height, width };
-        }
+        },
+        ...mapState({
+            chartType: state => state.chartType
+        })
     }
 }
 </script>
