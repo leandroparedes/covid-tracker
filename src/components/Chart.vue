@@ -1,13 +1,29 @@
 <template>
     <div>
-        <div class="d-flex flex-row-reverse mb-5 justify-center justify-md-start">
-            <v-switch
-                hide-details
-                flat
-                :ripple="false"
-                @change="changeChartType"
-                :label="switchLabel"
-            ></v-switch>
+        <div class="d-flex flex-row-reverse mb-5 mb-md-0 justify-start">
+            <v-menu
+                offset-y
+                :close-on-click="true"
+            >
+                <template v-slot:activator="{ on }">
+                    <v-btn text v-on="on">
+                        {{ $vuetify.lang.t(`$vuetify.${selectedChartType}`) }}
+                        <v-icon small class="ml-2">fas fa-angle-down</v-icon>
+                    </v-btn>
+                </template>
+
+                <v-card tile>
+                    <v-list>
+                        <v-list-item
+                            v-for="(chartType, index) in chartTypes"
+                            :key="index"
+                            @click="changeChartType(chartType)"
+                        >
+                            {{ $vuetify.lang.t(`$vuetify.${chartType}`) }}
+                        </v-list-item>
+                    </v-list>
+                </v-card>
+            </v-menu>
         </div>
 
         <div
@@ -32,7 +48,8 @@ export default {
         return {
             windowWidth: window.innerWidth,
             options: {},
-            chartType: 'linear'
+            chartTypes: ['linear', 'logarithmic'],
+            selectedChartType: 'linear',
         }
     },
     mounted () {
@@ -87,7 +104,7 @@ export default {
             },
             scales: {
                 yAxes: [{
-                    type: this.chartType,
+                    type: this.selectedChartType,
                     ticks: {
                         callback: function (n, index, values) {
                             if (n < 1e3) return n;
@@ -123,30 +140,23 @@ export default {
         this.renderChart(this.chartData, this.options);
     },
     methods: {
-        changeChartType: function () {
-            if (this.chartType == 'linear') {
-                this.chartType = 'logarithmic';
-            } else {
-                this.chartType = 'linear';
-            }
+        changeChartType: function (type) {
+            this.selectedChartType = type;
         }
     },
     watch: {
         'chartData.datasets': function () {
             this.$data._chart.update();
         },
-        chartType: function () {
+        selectedChartType: function () {
             this.$data._chart.destroy();
-            this.options.scales.yAxes[0].type = this.chartType;
+            this.options.scales.yAxes[0].type = this.selectedChartType;
             this.renderChart(this.chartData, this.options);
         }
     },
     computed: {
         chartHeight: function () {
             return this.windowWidth >= 600 ? '60vh' : '50vh';
-        },
-        switchLabel: function () {
-            return this.$vuetify.lang.t('$vuetify.chart') + ': ' + this.$vuetify.lang.t(`$vuetify.${this.chartType}`);
         }
     }
 }
