@@ -40,13 +40,13 @@
                     <v-tab>{{ $vuetify.lang.t('$vuetify.confirmed') }}</v-tab>
                     <v-tab>{{ $vuetify.lang.t('$vuetify.deaths') }}</v-tab>
 
-                    <v-tab-item class="pa-6">
+                    <v-tab-item class="px-6 pb-6">
                         <chart
                             v-if="confirmedChartLoaded"
                             :chart-data="confirmedChartData"
                         ></chart>
                     </v-tab-item>
-                    <v-tab-item class="pa-6">
+                    <v-tab-item class="px-6 pb-6">
                         <chart
                             v-if="deathsChartLoaded"
                             :chart-data="deathsChartData"

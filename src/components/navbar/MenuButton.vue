@@ -2,7 +2,7 @@
     <v-menu
         offset-y
         :close-on-content-click="false"
-        nudge-width="260"
+        nudge-width="190"
     >
         <template v-slot:activator="{ on }">
             <v-btn icon v-on="on">
@@ -26,24 +26,6 @@
                     </v-list-item-action>
                     <v-list-item-title>
                         {{ $vuetify.theme.dark ? $vuetify.lang.t('$vuetify.darkMode') : $vuetify.lang.t('$vuetify.lightMode') }}
-                    </v-list-item-title>
-                </v-list-item>
-
-                <v-list-item>
-                    <v-list-item-action>
-                        <v-switch
-                            hide-details
-                            flat
-                            :ripple="false"
-                            @change="changeChartType"
-                        >
-                        </v-switch>
-                    </v-list-item-action>
-                    <v-list-item-title>
-                        {{ $vuetify.lang.t('$vuetify.chart') }} :
-                        {{ this.$store.state.chartType == 'linear' 
-                            ? $vuetify.lang.t('$vuetify.linear') 
-                            : $vuetify.lang.t('$vuetify.logarithmic') }}
                     </v-list-item-title>
                 </v-list-item>
 
@@ -84,13 +66,6 @@ export default {
     methods: {
         changeLocale: function (locale) {
             this.$vuetify.lang.current = locale;
-        },
-        changeChartType: function () {
-            if (this.$store.state.chartType == 'linear') {
-                this.$store.commit('set_chart_type', 'logarithmic');
-            } else {
-                this.$store.commit('set_chart_type', 'linear');
-            }
         }
     }
 }

@@ -1,9 +1,21 @@
 <template>
-    <div
-        style="position: relative; width:100%"
-        :style="{'height': chartHeight}"
-    >
-        <canvas ref="canvas"></canvas>
+    <div>
+        <div class="d-flex flex-row-reverse mb-5 justify-center justify-md-start">
+            <v-switch
+                hide-details
+                flat
+                :ripple="false"
+                @change="changeChartType"
+                :label="switchLabel"
+            ></v-switch>
+        </div>
+
+        <div
+            style="position: relative; width:100%"
+            :style="{'height': chartHeight}"
+        >
+            <canvas ref="canvas"></canvas>
+        </div>
     </div>
 </template>
 
@@ -20,6 +32,7 @@ export default {
         return {
             windowWidth: window.innerWidth,
             options: {},
+            chartType: 'linear'
         }
     },
     mounted () {
@@ -109,6 +122,15 @@ export default {
 
         this.renderChart(this.chartData, this.options);
     },
+    methods: {
+        changeChartType: function () {
+            if (this.chartType == 'linear') {
+                this.chartType = 'logarithmic';
+            } else {
+                this.chartType = 'linear';
+            }
+        }
+    },
     watch: {
         'chartData.datasets': function () {
             this.$data._chart.update();
@@ -123,9 +145,9 @@ export default {
         chartHeight: function () {
             return this.windowWidth >= 600 ? '60vh' : '50vh';
         },
-        ...mapState({
-            chartType: state => state.chartType
-        })
+        switchLabel: function () {
+            return this.$vuetify.lang.t('$vuetify.chart') + ': ' + this.$vuetify.lang.t(`$vuetify.${this.chartType}`);
+        }
     }
 }
 </script>
