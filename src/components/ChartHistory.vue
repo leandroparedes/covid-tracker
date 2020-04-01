@@ -1,6 +1,6 @@
 <template>
     <v-card v-if="loaded">
-        <v-card-title>
+        <v-card-title class="pb-0">
             {{ $vuetify.lang.t(
                 '$vuetify.showingDataFrom',
                 $moment(lastDate).locale($vuetify.lang.current).fromNow()
