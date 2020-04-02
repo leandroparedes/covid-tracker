@@ -38,18 +38,40 @@
                 </info-card>
             </v-col>
         </v-row>
+
+        <v-row>
+            <v-col cols="12" lg="6">
+                <v-card class="pa-4">
+                    <div class="title pb-2">Exponential</div>
+                    <historical-chart :chart-data="historicalData" type="linear"></historical-chart>
+                </v-card>
+            </v-col>
+            <v-col cols="12" lg="6">
+                <v-card class="pa-4">
+                    <div class="title pb-2">Logarithmic</div>
+                    <historical-chart :chart-data="historicalData" type="logarithmic"></historical-chart>
+                </v-card>
+            </v-col>
+        </v-row>
+
+        <div class="text-center mt-4">
+            <div class="primary--text">Last updated</div>
+            <div class="grey--text">{{ new Date(global.totals.updated) }}</div>
+        </div>
     </div>
 </template>
 
 <script>
 import { mapState } from 'vuex';
 import InfoCard from '@/components/InfoCard.vue';
+import HistoricalChart from '@/components/HistoricalChart.vue';
 
 export default {
     name: 'Home',
 
     components: {
-        InfoCard
+        InfoCard,
+        HistoricalChart
     },
 
     mounted () {
@@ -57,7 +79,39 @@ export default {
     },
 
     computed: {
-        ...mapState(['global'])
+        ...mapState(['global']),
+
+        historicalData: function () {
+            let chartData = { labels: null, datasets: [] };
+
+            chartData.labels = Object.keys(this.global.historical.cases);
+
+            chartData.datasets.push({
+                label: 'Cases',
+                data: Object.values(this.global.historical.cases),
+                fill: false,
+                borderColor: '#424242',
+                pointBackgroundColor: '#424242',
+            });
+
+            chartData.datasets.push({
+                label: 'Recovered',
+                data: Object.values(this.global.historical.recovered),
+                fill: false,
+                borderColor: '#4caf50',
+                pointBackgroundColor: '#4caf50'
+            });
+
+            chartData.datasets.push({
+                label: 'Deaths',
+                data: Object.values(this.global.historical.deaths),
+                fill: false,
+                borderColor: '#ff5252',
+                pointBackgroundColor: '#ff5252',
+            });
+
+            return chartData;
+        }
     }
 }
 </script>
