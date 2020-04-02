@@ -1,58 +1,61 @@
 <template>
     <div>
-        <div
-            class="font-weight-black text-center text-uppercase mb-8"
-            :class="displayClass"
-        >
-            {{ $vuetify.lang.t('$vuetify.timelineTitle') }}
-        </div>
-
-        <v-row>
-            <v-col
-                sm="6" offset-sm="6"
-                lg="4" offset-lg="8"
-                class="d-flex"
+        <div v-if="! loading">
+            <div
+                class="font-weight-black text-center text-uppercase mb-8"
+                :class="displayClass"
             >
-                <datepicker @go-to-date="handleGoToDate"></datepicker>
-                
-                <v-btn
-                    fab
-                    @click="goToBookmarked"
-                    v-if="$store.state.bookmark"
-                    class="ml-4"
-                    :title="$vuetify.lang.t('$vuetify.goToBookmark')"
+                {{ $vuetify.lang.t('$vuetify.timelineTitle') }}
+            </div>
+
+            <v-row>
+                <v-col
+                    sm="6" offset-sm="6"
+                    lg="4" offset-lg="8"
+                    class="d-flex"
                 >
-                    <v-icon color="primary">fas fa-bookmark</v-icon>
+                    <datepicker @go-to-date="handleGoToDate"></datepicker>
+                    
+                    <v-btn
+                        fab
+                        @click="goToBookmarked"
+                        v-if="$store.state.bookmark"
+                        class="ml-4"
+                        :title="$vuetify.lang.t('$vuetify.goToBookmark')"
+                    >
+                        <v-icon color="primary">fas fa-bookmark</v-icon>
+                    </v-btn>
+                </v-col>
+            </v-row>
+
+            <v-timeline :dense="timelineDense">
+                <v-timeline-item
+                    v-for="(situation, index) in situations.data"
+                    :key="index"
+                >
+                    <template v-slot:opposite>
+                        <highlights :highlights="situation.highlights"></highlights>
+                    </template>
+                    <situation-card :situation="situation"></situation-card>
+                </v-timeline-item>
+            </v-timeline>
+
+            <div
+                v-if="situations.links && situations.links.next"
+                class="text-center"
+            >
+                <v-btn
+                    @click="loadMore"
+                    :loading="loadingMore"
+                    text
+                    x-large
+                >
+                    {{ $vuetify.lang.t('$vuetify.loadMore') }}
                 </v-btn>
-            </v-col>
-        </v-row>
-
-        <v-timeline :dense="timelineDense">
-            <v-timeline-item
-                v-for="(situation, index) in situations.data"
-                :key="index"
-            >
-                <template v-slot:opposite>
-                    <highlights :highlights="situation.highlights"></highlights>
-                </template>
-                <situation-card :situation="situation"></situation-card>
-            </v-timeline-item>
-        </v-timeline>
-
-        <div
-            v-if="situations.links && situations.links.next"
-            class="text-center"
-        >
-            <v-btn
-                @click="loadMore"
-                :loading="loadingMore"
-                text
-                x-large
-            >
-                {{ $vuetify.lang.t('$vuetify.loadMore') }}
-            </v-btn>
+            </div>
         </div>
-
+        <timeline-placeholder v-else></timeline-placeholder>
+        
         <v-overlay :value="loading">
             <v-progress-circular indeterminate size="64"></v-progress-circular>
         </v-overlay>
@@ -64,9 +67,16 @@ import SituationCard from '@/components/timeline/SituationCard.vue';
 import Highlights from '@/components/timeline/Highlights.vue';
 import Datepicker from '@/components/timeline/Datepicker.vue';
 
+import TimelinePlaceholder from '@/components/placeholders/Timeline.vue';
+
 export default {
     name: 'Timeline',
-    components: { SituationCard, Highlights, Datepicker },
+    components: {
+            SituationCard,
+            Highlights,
+            Datepicker,
+            TimelinePlaceholder
+        },
     data: function () {
         return {
             situations: [],
