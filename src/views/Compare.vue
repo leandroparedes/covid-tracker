@@ -35,30 +35,18 @@
                 <v-card>
                     <div class="title pl-4 pt-4 text-capitalize">{{ type }}</div>
                     <v-tabs centered>
-                        <v-tab>Cases</v-tab>
-                        <v-tab>Recovered</v-tab>
-                        <v-tab>Deaths</v-tab>
+                        <v-tab v-for="(chart, index) in Object.keys(charts)" :key="index">
+                            {{ chart }}
+                        </v-tab>
 
-                        <v-tab-item class="pa-4">
+                        <v-tab-item
+                            class="pa-4"
+                            v-for="(chart, index) in Object.keys(charts)"
+                            :key="index"
+                        >
                             <historical-chart
-                                v-if="casesChartLoaded"
-                                :chart-data="casesChart"
-                                :type="type"
-                            ></historical-chart>
-                        </v-tab-item>
-
-                        <v-tab-item class="pa-4">
-                            <historical-chart
-                                v-if="recoveredChartLoaded"
-                                :chart-data="recoveredChart"
-                                :type="type"
-                            ></historical-chart>
-                        </v-tab-item>
-
-                        <v-tab-item class="pa-4">
-                            <historical-chart
-                                v-if="deathsChartLoaded"
-                                :chart-data="deathsChart"
+                                v-if="! loadingCharts"
+                                :chart-data="charts[chart]"
                                 :type="type"
                             ></historical-chart>
                         </v-tab-item>
@@ -84,27 +72,16 @@ export default {
 
     data: function () {
         return {
-            chartTypes: ['linear', 'logarithmic'],
-
             values: [],
             items: [],
 
-            casesChartLoaded: false,
-            casesChart: {
-                labels: [],
-                datasets: []
-            },
-
-            recoveredChartLoaded: false,
-            recoveredChart: {
-                labels: [],
-                datasets: []
-            },
-
-            deathsChartLoaded: false,
-            deathsChart: {
-                labels: [],
-                datasets: []
+            chartTypes: ['linear', 'logarithmic'],
+            
+            loadingCharts: false,
+            charts: {
+                cases: { labels: [], datasets: [] },
+                recovered: { labels: [], datasets: [] },
+                deaths: { labels: [], datasets: [] }
             }
         }
     },
@@ -128,18 +105,17 @@ export default {
     watch: {
         values: function (newValues, oldValues) {
             if (newValues.length === 0) {
-                this.casesChart = { labels: [], datasets: [] };
-                this.recoveredChart = { labels: [], datasets: [] };
-                this.deathsChart = { labels: [], datasets: [] };
+                Object.keys(this.charts).map(chart => {
+                    this.charts[chart] = { labels: [], datasets: [] };
+                });
             } else if (newValues.length < oldValues.length) {
                 const removed = oldValues.filter(c => !newValues.includes(c))[0];
-                this.casesChart.datasets = this.casesChart.datasets.filter(d => d.label != removed);
-                this.recoveredChart.datasets = this.recoveredChart.datasets.filter(d => d.label != removed);
-                this.deathsChart.datasets = this.deathsChart.datasets.filter(d => d.label != removed);
+
+                Object.keys(this.charts).map(chart => {
+                    this.charts[chart].datasets = this.charts[chart].datasets.filter(d => d.label != removed);
+                });
             } else {
-                this.casesChartLoaded = false;
-                this.recoveredChartLoaded = false;
-                this.deathsChartLoaded = false;
+                this.loadingCharts = true;
 
                 const lastAddedCountry = newValues.length > 0 ? newValues[newValues.length -1] : newValues[0];
                 const historicalUrl = `https://corona.lmao.ninja/v2/historical/${lastAddedCountry}`;
@@ -147,36 +123,18 @@ export default {
                 const color = this.getRandomColor();
 
                 this.axios.get(historicalUrl).then(res => {
-                    this.casesChart.labels = Object.keys(res.data.timeline.cases);
-                    this.casesChart.datasets.push({
-                        label: res.data.country,
-                        data: Object.values(res.data.timeline.cases),
-                        fill: false,
-                        borderColor: color,
-                        pointBackgroundColor: color
-                    });
-
-                    this.recoveredChart.labels = Object.keys(res.data.timeline.recovered);
-                    this.recoveredChart.datasets.push({
-                        label: res.data.country,
-                        data: Object.values(res.data.timeline.recovered),
-                        fill: false,
-                        borderColor: color,
-                        pointBackgroundColor: color
-                    });
-
-                    this.deathsChart.labels = Object.keys(res.data.timeline.deaths);
-                    this.deathsChart.datasets.push({
-                        label: res.data.country,
-                        data: Object.values(res.data.timeline.deaths),
-                        fill: false,
-                        borderColor: color,
-                        pointBackgroundColor: color
+                    Object.keys(this.charts).map(chart => {
+                        this.charts[chart].labels = Object.keys(res.data.timeline[chart]);
+                        this.charts[chart].datasets.push({
+                            label: res.data.country,
+                            data: Object.values(res.data.timeline[chart]),
+                            fill: false,
+                            borderColor: color,
+                            pointBackgroundColor: color
+                        });
                     });
                 }).finally(() => {
-                    this.casesChartLoaded = true;
-                    this.recoveredChartLoaded = true;
-                    this.deathsChartLoaded = true;
+                    this.loadingCharts = false;
                 });
             }
         }
