@@ -67,7 +67,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import InfoCard from '@/components/InfoCard.vue';
 import HistoricalChart from '@/components/HistoricalChart.vue';
 
@@ -76,13 +75,30 @@ export default {
 
     components: { InfoCard, HistoricalChart },
 
+    data: function () {
+        return {
+            loading: false,
+            country: {
+                info: {},
+                historical: {}
+            }
+        }
+    },
+
     mounted () {
-        this.$store.dispatch('fetch_country_data', this.$route.params.countryCode);
+        this.loading = true;
+
+        const countryCode = this.$route.params.countryCode;
+        const infoUrl = this.axios.get(`https://corona.lmao.ninja/countries/${countryCode}`);
+        const historicalUrl =  this.axios.get(`https://corona.lmao.ninja/v2/historical/${countryCode}`);
+
+        this.axios.all([infoUrl, historicalUrl]).then(this.axios.spread((info, historical) => {
+            this.country.info = info.data;
+            this.country.historical = historical.data;
+        })).finally(() => this.loading = false);
     },
 
     computed: {
-        ...mapState(['country']),
-
         historicalData: function () {
             let chartData = { labels: null, datasets: [] };
 
