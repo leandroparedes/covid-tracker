@@ -1,7 +1,11 @@
 <template>
-    <div id="app">
-        <router-view :key="$route.fullPath"></router-view>
-    </div>
+    <v-app>
+        <v-content>
+            <v-container>
+                <router-view :key="$route.fullPath"></router-view>
+            </v-container>
+        </v-content>
+    </v-app>
 </template>
 
 <script>
