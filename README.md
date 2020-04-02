@@ -1,5 +1,10 @@
 # vue-vuetify
 
+## Includes
+* Router
+* Store (with vuex-persistedstate)
+* Axios (with vue-axios)
+
 ## Project setup
 ```
 npm install
