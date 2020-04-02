@@ -56,7 +56,7 @@
         </div>
         <timeline-placeholder v-else></timeline-placeholder>
         
-        <v-overlay :value="loading">
+        <v-overlay :value="loading || loadingScroll">
             <v-progress-circular indeterminate size="64"></v-progress-circular>
         </v-overlay>
     </div>
@@ -81,7 +81,8 @@ export default {
         return {
             situations: [],
             loading: false,
-            loadingMore: false
+            loadingMore: false,
+            loadingScroll: false
         }
     },
     mounted () {
@@ -116,7 +117,7 @@ export default {
             this.scrollTo(bookmarkID);
         },
         scrollTo: async function (id) {
-            this.loading = true;
+            this.loadingScroll = true;
 
             let element = document.getElementById(id);
             while (! element) {
@@ -127,7 +128,7 @@ export default {
             // without this, scrollIntoView doesn't center the element on the screen
             setTimeout(() => {
                 element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                this.loading = false;
+                this.loadingScroll = false;
             }, 1000);
         },
         handleGoToDate: function (date) {
