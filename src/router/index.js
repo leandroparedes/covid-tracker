@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Global from '@/views/Global.vue';
+import Search from '@/views/Search.vue';
+import ViewCountry from '@/views/ViewCountry.vue';
 
 Vue.use(VueRouter);
 
@@ -13,6 +15,16 @@ const routes = [
         path: '/global',
         name: 'Global',
         component: Global
+    },
+    {
+        path: '/country/:countryCode',
+        name: 'ViewCountry',
+        component: ViewCountry
+    },
+    {
+        path: '/search',
+        name: 'Search',
+        component: Search
     }
 ];
 

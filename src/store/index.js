@@ -11,6 +11,10 @@ export default new Vuex.Store({
             loading: false,
             totals: {},
             historical: {}
+        },
+        countries: {
+            loading: false,
+            data: []
         }
     },
     mutations: {
@@ -22,6 +26,13 @@ export default new Vuex.Store({
         },
         set_global_historical (state, historical) {
             state.global.historical = historical;
+        },
+
+        set_countries_loading (state, loading) {
+            state.countries.loading = loading;
+        },
+        set_countries_data(state, data) {
+            state.countries.data = data;
         }
     },
     actions: {
@@ -38,6 +49,18 @@ export default new Vuex.Store({
                 commit('set_global_loading', false);
             });
         },
+
+        fetch_countries_data ({commit}) {
+            commit('set_countries_loading', true);
+
+            const countriesUrl = 'https://corona.lmao.ninja/countries';
+
+            Vue.axios.get(countriesUrl).then(res => {
+                commit('set_countries_data', res.data);
+            }).finally(() => {
+                commit('set_countries_loading', false);
+            });
+        }
     },
     modules: {
     }
