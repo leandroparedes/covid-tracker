@@ -1,4 +1,4 @@
-# vue-vuetify
+# vue-cli-boilerplate
 
 ## Includes
 * Router
