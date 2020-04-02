@@ -10,6 +10,10 @@ Vue.use(VueAxios, axios);
 
 Vue.config.productionTip = false;
 
+Vue.filter('formatNumber', function (value) {
+    return value ? Intl.NumberFormat().format(value) : 0;
+});
+
 new Vue({
     router,
     store,
