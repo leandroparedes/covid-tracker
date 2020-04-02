@@ -75,6 +75,12 @@ export default {
 
     mounted () {
         this.renderChart(this.chartData, this.options);
+    },
+
+    watch: {
+        'chartData.datasets': function () {
+            this.$data._chart.update();
+        },
     }
 }
 </script>
