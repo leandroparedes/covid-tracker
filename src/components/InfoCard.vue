@@ -3,7 +3,7 @@
         <v-card-title class="d-flex justify-space-between">
             <slot name="title">Information</slot>
             <v-icon :color="color">
-                <slot name="icon">fas fa-info-circle</slot>
+                <slot name="icon"></slot>
             </v-icon>
         </v-card-title>
         <v-card-text class="headline">
@@ -21,8 +21,7 @@ export default {
 
     props: {
         color: {
-            type: String,
-            default: '#2196f3'
+            type: String
         }
     }
 }
