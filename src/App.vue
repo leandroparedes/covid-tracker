@@ -4,6 +4,10 @@
             <v-btn icon large to="/global">
                 <v-icon>fas fa-globe-americas</v-icon>
             </v-btn>
+            <v-spacer></v-spacer>
+            <v-btn icon large to="/search">
+                <v-icon>fas fa-search</v-icon>
+            </v-btn>
         <v-content>
             <v-container>
                 <router-view :key="$route.fullPath"></router-view>
